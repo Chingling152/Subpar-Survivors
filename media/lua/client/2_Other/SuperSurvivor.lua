@@ -1592,7 +1592,7 @@ function SuperSurvivor:NPCcalculateInjurySpeed(bodypart,b)
 	local deepWoundSpeedModifier = bodypart:getDeepWoundSpeedModifier();
 	local n = 0.0;
 	if ((bodypart:getType() == "Foot_L" or bodypart:getType() == "Foot_R") and (bodypart:getBurnTime() > 5.0 or bodypart:getBiteTime() > 0.0 or bodypart:deepWounded() or bodypart:isSplint() or bodypart:getFractureTime() > 0.0 or bodypart:haveGlass())) then
-		n = 1.0f
+		n = 1.0
 		if (bodypart:bandaged()) then
 			n = 0.7;
 		end

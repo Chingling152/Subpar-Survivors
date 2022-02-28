@@ -4,40 +4,40 @@ EnabledTranslations["JP"] = true
 
 --weapon tables:
 MeleWeapons = {
-"Base.Hammer","Base.Sledgehammer","Base.BallPeenHammer","Base.WoodenMallet","Base.Wrench","Base.PipeWrench",
-"Base.Shovel","Base.Shovel2","Base.SnowShovel","Base.Rake","Base.LeafRake","Base.Plunger","Base.ClosedUmbrellaRed",
-"Base.Plank","Base.Plank","Base.Plank","Base.Plank","Base.PlankNail","Base.PlankNail","Base.PlankNail","Base.MetalPipe","Base.MetalBar",
-"Base.Crowbar","Base.Crowbar","Base.Crowbar","Base.Crowbar","Base.Crowbar",
-"Base.BaseballBat","Base.BaseballBat","Base.BaseballBat","Base.BaseballBatNails",
-"Base.Golfclub","Base.TennisRacket","Base.BadmintonRacket","Base.Poolcue","Base.HockeyStick","Base.LaCrosseStick","Base.IcePick",
-"Base.Pan","Base.Saucepan","Base.GridlePan","Base.RollingPin",
-"Base.GuitarAcoustic","Base.GuitarElectricBlack","Base.GuitarElectricBassBlue","Base.Flute","Base.FishingRod",
+	"Base.Hammer","Base.Sledgehammer","Base.BallPeenHammer","Base.WoodenMallet","Base.Wrench","Base.PipeWrench",
+	"Base.Shovel","Base.Shovel2","Base.SnowShovel","Base.Rake","Base.LeafRake","Base.Plunger","Base.ClosedUmbrellaRed",
+	"Base.Plank","Base.Plank","Base.Plank","Base.Plank","Base.PlankNail","Base.PlankNail","Base.PlankNail","Base.MetalPipe","Base.MetalBar",
+	"Base.Crowbar","Base.Crowbar","Base.Crowbar","Base.Crowbar","Base.Crowbar",
+	"Base.BaseballBat","Base.BaseballBat","Base.BaseballBat","Base.BaseballBatNails",
+	"Base.Golfclub","Base.TennisRacket","Base.BadmintonRacket","Base.Poolcue","Base.HockeyStick","Base.LaCrosseStick","Base.IcePick",
+	"Base.Pan","Base.Saucepan","Base.GridlePan","Base.RollingPin",
+	"Base.GuitarAcoustic","Base.GuitarElectricBlack","Base.GuitarElectricBassBlue","Base.Flute","Base.FishingRod",
 
-"Base.GardenFork","Base.WoodenLance",
-"Base.SpearCrafted","Base.SpearCrafted","Base.SpearKnife","Base.SpearScissors","Base.SpearScrewdriver","Base.SpearHuntingKnife",
+	"Base.GardenFork","Base.WoodenLance",
+	"Base.SpearCrafted","Base.SpearCrafted","Base.SpearKnife","Base.SpearScissors","Base.SpearScrewdriver","Base.SpearHuntingKnife",
 
-"Base.Axe","Base.HandAxe","Base.WoodAxe","Base.Pickaxe","Base.AxeStone","Base.HandScythe",
-"Base.Spoon","Base.Fork","Base.Screwdriver","Base.Scalpel","Base.Stake",
-"Base.KitchenKnife","Base.HuntingKnife","Base.Machete","Base.Katana"
+	"Base.Axe","Base.HandAxe","Base.WoodAxe","Base.Pickaxe","Base.AxeStone","Base.HandScythe",
+	"Base.Spoon","Base.Fork","Base.Screwdriver","Base.Scalpel","Base.Stake",
+	"Base.KitchenKnife","Base.HuntingKnife","Base.Machete","Base.Katana"
 }; -- RollingPin acts as a torch, setting target on fire
 
 if(isModEnabled("ChainSaw")) then
-table.insert(MeleWeapons,"ChainSaw.ChainSaw");
+	table.insert(MeleWeapons,"ChainSaw.ChainSaw");
 end
 
 if(isModEnabled("Hydrocraft")) then
-table.insert(MeleWeapons,"Hydrocraft.HCAluminiumbat");                          
-table.insert(MeleWeapons,"Hydrocraft.HCBaseballbatbarbedwire");
-table.insert(MeleWeapons,"Hydrocraft.HCHatchetiron");
-table.insert(MeleWeapons,"Hydrocraft.HCKnifeiron");
-table.insert(MeleWeapons,"Hydrocraft.HCKatana");
-table.insert(MeleWeapons,"Hydrocraft.HCMachete");
-table.insert(MeleWeapons,"Hydrocraft.HCMonkeywrench");
-table.insert(MeleWeapons,"Hydrocraft.HCKnifesteel");
-table.insert(MeleWeapons,"Hydrocraft.HCHatchetsteel");
-table.insert(MeleWeapons,"Hydrocraft.HCSurvivalaxe");
-table.insert(MeleWeapons,"Hydrocraft.HCWrench");
-table.insert(MeleWeapons,"Hydrocraft.HCRake");
+	table.insert(MeleWeapons,"Hydrocraft.HCAluminiumbat");                          
+	table.insert(MeleWeapons,"Hydrocraft.HCBaseballbatbarbedwire");
+	table.insert(MeleWeapons,"Hydrocraft.HCHatchetiron");
+	table.insert(MeleWeapons,"Hydrocraft.HCKnifeiron");
+	table.insert(MeleWeapons,"Hydrocraft.HCKatana");
+	table.insert(MeleWeapons,"Hydrocraft.HCMachete");
+	table.insert(MeleWeapons,"Hydrocraft.HCMonkeywrench");
+	table.insert(MeleWeapons,"Hydrocraft.HCKnifesteel");
+	table.insert(MeleWeapons,"Hydrocraft.HCHatchetsteel");
+	table.insert(MeleWeapons,"Hydrocraft.HCSurvivalaxe");
+	table.insert(MeleWeapons,"Hydrocraft.HCWrench");
+	table.insert(MeleWeapons,"Hydrocraft.HCRake");
 end
 
 if(isModEnabled("Brita")) then
@@ -51,10 +51,10 @@ end
 RangeWeapons = {"Base.Pistol2","Base.Revolver_Short","Base.Revolver","Base.Pistol","Base.Revolver_Long","Base.VarmintRifle","Base.HuntingRifle","Base.Pistol","Base.Shotgun","Base.ShotgunSawnoff","Base.Pistol","Base.Shotgun"};
 
 if(isModEnabled("ORGM")) then -- add some rare auto orgm guns
-table.insert(RangeWeapons,"ORGM.Mac11")
-table.insert(RangeWeapons,"ORGM.Glock17")
-table.insert(RangeWeapons,"ORGM.Ber93R")
-table.insert(RangeWeapons,"ORGM.M16")
+	table.insert(RangeWeapons,"ORGM.Mac11")
+	table.insert(RangeWeapons,"ORGM.Glock17")
+	table.insert(RangeWeapons,"ORGM.Ber93R")
+	table.insert(RangeWeapons,"ORGM.M16")
 end
 
 -- Weapons (firearms) compatibility with Brita's Weapon Pack

@@ -113,9 +113,3 @@ Gang1Group = SSGM:newGroup()  -- 4
 Gang1GroupID = Gang1Group:getID()
 Gang2Group = SSGM:newGroup()  -- 5
 Gang2GroupID = Gang2Group:getID()
-
-
-
-
-
-

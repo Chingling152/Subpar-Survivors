@@ -4,81 +4,81 @@ LMSConditions.LowerMoodleTable = {}
 LMSConditions.TimeOfRegister = nil
 
 LMSConditions.SlightlyBored = {
-"",
-""
+	"",
+	""
 }
 LMSConditions.Bored = {
-"",
-"",
-"",
-""
+	"",
+	"",
+	"",
+	""
 }
 LMSConditions.VeryBored = {
-"",
-"",
-"",
-""
+	"",
+	"",
+	"",
+	""
 }
 LMSConditions.ExtremelyBored = {
-"",
-"",
-"",
-""
+	"",
+	"",
+	"",
+	""
 }
 LMSConditions.SlightlyStressed = {
-""
+	""
 }
 LMSConditions.Stressed = {
-""
+	""
 }
 LMSConditions.VeryStressed = {
-""
+	""
 }
 LMSConditions.ExtremelyStressed = {
-""
+	""
 }
 LMSConditions.SlightlyPanicked = SurvivorSpeechTable["Panic"]
-LMSConditions.Panicked = SurvivorSpeechTable["Scared"]
-LMSConditions.VeryPanicked = SurvivorSpeechTable["Scared"]
-LMSConditions.ExtremelyPanicked = SurvivorSpeechTable["Scream"]
-LMSConditions.Zombie = {
-"",
-""
+	LMSConditions.Panicked = SurvivorSpeechTable["Scared"]
+	LMSConditions.VeryPanicked = SurvivorSpeechTable["Scared"]
+	LMSConditions.ExtremelyPanicked = SurvivorSpeechTable["Scream"]
+	LMSConditions.Zombie = {
+	"",
+	""
 }
 LMSConditions.SlightlyPainful = SurvivorSpeechTable["Hurt"]
 LMSConditions.Painful = SurvivorSpeechTable["Injured"]
 LMSConditions.VeryPainful = SurvivorSpeechTable["Injured"]
 LMSConditions.ExtremelyPainful = SurvivorSpeechTable["BadInjured"]
 LMSConditions.Campfire = {
-"*sings* Irene goodnight, Irene goodnight. Goodnight, Irene, goodnight, Irene, I'll see you in my dreams...",
-"*sings* Val-der-ri, val-der-ra Val-der-ra, val-der-ha ha ha ha ha ha Val-der-ri, val-der-ra...",
-"*sings* One bright day in the middle of the night, Two dead boys got up to fight, Back to back the faced each other", 
-"Drew their swords and shot each other. A deaf police man heard the noise, So he came and shot those two dead boys.", 
-"If you don\'t believe this lie is true, Ask the blind man he saw too.",
-"*sings* Swing low, sweet chariot, Comin' for to carry me home; Swing low, sweet chariot, Comin' for to carry me home."
+	"*sings* Irene goodnight, Irene goodnight. Goodnight, Irene, goodnight, Irene, I'll see you in my dreams...",
+	"*sings* Val-der-ri, val-der-ra Val-der-ra, val-der-ha ha ha ha ha ha Val-der-ri, val-der-ra...",
+	"*sings* One bright day in the middle of the night, Two dead boys got up to fight, Back to back the faced each other", 
+	"Drew their swords and shot each other. A deaf police man heard the noise, So he came and shot those two dead boys.", 
+	"If you don\'t believe this lie is true, Ask the blind man he saw too.",
+	"*sings* Swing low, sweet chariot, Comin' for to carry me home; Swing low, sweet chariot, Comin' for to carry me home."
 }
 LMSConditions.LMSMoodles = {
-"Endurance",
-"Tired",
-"Hungry",
-"Panic",
-"Sick",
-"Bored",
-"Unhappy",
-"Bleeding",
-"Wet",
-"HasACold",
-"Angry",
-"Stress",
-"Thirst",
-"Injured",
-"Pain",
-"HeavyLoad",
-"Drunk",
-"Zombie",
-"Hyperthermia",
-"Hypothermia",
-"FoodEaten"
+	"Endurance",
+	"Tired",
+	"Hungry",
+	"Panic",
+	"Sick",
+	"Bored",
+	"Unhappy",
+	"Bleeding",
+	"Wet",
+	"HasACold",
+	"Angry",
+	"Stress",
+	"Thirst",
+	"Injured",
+	"Pain",
+	"HeavyLoad",
+	"Drunk",
+	"Zombie",
+	"Hyperthermia",
+	"Hypothermia",
+	"FoodEaten"
 }
 
 function LMSConditions.checkIfLoaded() -- prevent player from re-saying a condition

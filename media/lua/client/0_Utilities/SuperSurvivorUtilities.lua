@@ -924,9 +924,11 @@ function getSideSquare(square, supersurvivor)
     return square;
 end
 
+superSurvivorsId = "SubparSurvivors2"
+
 function doesFileExist(fileName)
     local fileTable = {}
-    local readFile = getModFileReader("SubparSurvivors", getWorld():getWorld() .. getFileSeparator() .. fileName, false)
+    local readFile = getModFileReader(superSurvivorsId, getWorld():getWorld() .. getFileSeparator() .. fileName, false)
 
     if (readFile) then
         return true
@@ -937,8 +939,7 @@ end
 
 function table.load(fileName)
     local fileTable = {}
-    local readFile = getModFileReader("SubparSurvivors",
-        getWorld():getWorld() .. getFileSeparator() .. fileName .. ".lua", true)
+    local readFile = getModFileReader(superSurvivorsId,getWorld():getWorld() .. getFileSeparator() .. fileName .. ".lua", true)
     if (readFile) then
         local scanLine = readFile:readLine()
         while scanLine do
@@ -966,7 +967,7 @@ function table.save(tbl, fileName)
 
     local destFile = getWorld():getWorld() .. getFileSeparator() .. fileName .. ".lua"
     -- print("table.saving:".. destFile)
-    local writeFile = getModFileWriter("SubparSurvivors", destFile, true, false)
+    local writeFile = getModFileWriter(superSurvivorsId, destFile, true, false)
     for i = 1, #tbl do
         writeFile:write(tbl[i] .. "\r\n");
         -- print(tbl[i])
@@ -977,7 +978,7 @@ end
 function kvtableload(fileName)
 
     local fileTable = {}
-    local readFile = getModFileReader("SubparSurvivors", getWorld():getWorld() .. getFileSeparator() .. fileName, true)
+    local readFile = getModFileReader(superSurvivorsId, getWorld():getWorld() .. getFileSeparator() .. fileName, true)
 
     if (not readFile) then
         return {}
@@ -1010,7 +1011,7 @@ function kvtablesave(fileTable, fileName)
     end
 
     local destFile = getWorld():getWorld() .. getFileSeparator() .. fileName
-    local writeFile = getModFileWriter("SubparSurvivors", destFile, true, false)
+    local writeFile = getModFileWriter(superSurvivorsId, destFile, true, false)
     -- print("saving fileTable:".. tostring(fileTable))
     for index, value in pairs(fileTable) do
 

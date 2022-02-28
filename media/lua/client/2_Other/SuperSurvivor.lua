@@ -1460,8 +1460,8 @@ end
 
 function SuperSurvivor:setHostile(toValue)
 	if(toValue) then
-		self.userName:setDefaultColors(128,128, 128, 255);
-		self.userName:setOutlineColors(180,0, 0,255);
+		self.userName:setDefaultColors(255,255, 255, 255);
+		self.userName:setOutlineColors(0,0, 0,255);	
 	else		
 		self.userName:setDefaultColors(255,255, 255, 255);
 		self.userName:setOutlineColors(0,0, 0,255);	

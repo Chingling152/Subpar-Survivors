@@ -3,5 +3,5 @@
 GFollowDistance = 5
 DebugSayEnabled = false
 SpeakEnabled = true
-PVPDefault = false 	-- 
+PVPDefault = true 	-- 
 

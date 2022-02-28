@@ -966,7 +966,7 @@ function table.save(tbl, fileName)
 
     local destFile = getWorld():getWorld() .. getFileSeparator() .. fileName .. ".lua"
     -- print("table.saving:".. destFile)
-    local writeFile = getModFileWriter("SubparSurvivors", destFile, true, false)
+    local writeFile = getModFileWriter("SubparSurvivors2", destFile, true, false)
     for i = 1, #tbl do
         writeFile:write(tbl[i] .. "\r\n");
         -- print(tbl[i])
@@ -977,7 +977,7 @@ end
 function kvtableload(fileName)
 
     local fileTable = {}
-    local readFile = getModFileReader("SubparSurvivors", getWorld():getWorld() .. getFileSeparator() .. fileName, true)
+    local readFile = getModFileReader("SubparSurvivors2", getWorld():getWorld() .. getFileSeparator() .. fileName, true)
 
     if (not readFile) then
         return {}
@@ -1150,9 +1150,9 @@ function GetFoodScore(item)
         if string.match(item:getDisplayName(), "Open") then
             Score = Score + 3
         elseif string.match(item:getDisplayName(), "Canned") then
-            Score = Score - 5
+            Score = Score + 2
         elseif (item:getDisplayName() == "Dog Food") then
-            Score = Score - 10
+            Score = Score - 8
         elseif (item:getHungerChange()) == nil or (item:getHungerChange() == 0) then
             Score = -9999
         end -- unidentified, probably canned from a mod

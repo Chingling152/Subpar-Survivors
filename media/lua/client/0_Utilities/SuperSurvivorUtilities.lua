@@ -926,7 +926,7 @@ end
 
 function doesFileExist(fileName)
     local fileTable = {}
-    local readFile = getModFileReader("SubparSurvivors", getWorld():getWorld() .. getFileSeparator() .. fileName, false)
+    local readFile = getModFileReader("SubparSurvivors2", getWorld():getWorld() .. getFileSeparator() .. fileName, false)
 
     if (readFile) then
         return true
@@ -937,7 +937,7 @@ end
 
 function table.load(fileName)
     local fileTable = {}
-    local readFile = getModFileReader("SubparSurvivors",
+    local readFile = getModFileReader("SubparSurvivors2",
         getWorld():getWorld() .. getFileSeparator() .. fileName .. ".lua", true)
     if (readFile) then
         local scanLine = readFile:readLine()
@@ -1010,12 +1010,12 @@ function kvtablesave(fileTable, fileName)
     end
 
     local destFile = getWorld():getWorld() .. getFileSeparator() .. fileName
-    local writeFile = getModFileWriter("SubparSurvivors", destFile, true, false)
-    -- print("saving fileTable:".. tostring(fileTable))
+    local writeFile = getModFileWriter("SubparSurvivors2", destFile, true, false)
+    print("saving fileTable:".. tostring(fileTable) .. "on :" .. destFile)
     for index, value in pairs(fileTable) do
 
         writeFile:write(tostring(index) .. " " .. tostring(value) .. "\r\n");
-        -- print("saving: " .. tostring(index) .. " " .. tostring(value[i]))
+        print("saving: " .. tostring(index) .. " " .. tostring(value[i]))
     end
     writeFile:close();
 

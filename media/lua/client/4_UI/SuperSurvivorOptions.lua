@@ -514,6 +514,16 @@ if index then
 		}
 		self:addCustomCombo('Bravery',splitpoint,y,comboWidth,getText("ContextMenu_SOption_SurvivorBravery"),options,getText("ContextMenu_SOption_SurvivorBraveryDesc"))
 		y = y + spacing
+
+		--- SURVIVOR NAMES
+		
+		local options = {
+			getText("ContextMenu_SD_DifferentColor"),
+			getText("ContextMenu_SD_SameColor"),
+			getText("ContextMenu_SD_Off")
+		}
+		self:addCustomCombo('SurvivorName',splitpoint,y,comboWidth,getText("ContextMenu_SOption_SurvivorName"),options,getText("ContextMenu_SOption_SurvivorNameDesc"))
+		y = y + spacing
 		
 		--- SURVIVOR INFINITE AMMO
 		

@@ -1459,7 +1459,7 @@ function SuperSurvivor:walkTowards(x,y,z)
 end
 
 function SuperSurvivor:setHostile(toValue)
-	if(toValue) then
+	if toValue and SuperSurvivorGetOptionValue("SurvivorName") == 1 then
 		self.userName:setDefaultColors(128,128, 128, 255);
 		self.userName:setOutlineColors(180,0, 0,255);
 	else		

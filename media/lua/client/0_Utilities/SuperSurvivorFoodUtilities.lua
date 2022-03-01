@@ -5,6 +5,7 @@ local FoodScores = {
     Cooked = 5,
     Fresh = 4,
     FruitsAndVegetables = 3,
+    Fish = 3, --not implemented
     OpenCanned = 2,
     Canned = 1,
     Alchool = 0,
@@ -19,21 +20,19 @@ local FoodScores = {
 }
 
 function isCanOpen(thisFood)
-    local name = thisFood:getDisplayName()
-
-    if name == nil then
+    if not thisFood then
         return false
     end
-    return string.match(name, "Open")
+
+    return string.match(thisFood:getDisplayName(), "Open")
 end
 
 function isDogFood(thisFood)
-    local name = thisFood:getDisplayName()
-
-    if name == nil then
+    if not thisFood then
         return false
     end
-    return string.match(name, "Dog Food")
+
+    return string.match(thisFood:getDisplayName(), "Dog Food")
 end
 
 function isCanned(thisFood)
@@ -41,13 +40,7 @@ function isCanned(thisFood)
         return false 
     end
 
-	local dtype = thisFood:getType() .. thisFood:getDisplayName() 
-	
-	if string.match(dtype, "Canned") then 
-        return true
-	else 
-        return false 
-    end
+    return string.match(thisFood:getType() .. thisFood:getDisplayName(), "Canned")
 end
 
 
@@ -98,11 +91,11 @@ function GetFoodScore(item)
     end
 
     if not (item:isCooked()) then
-        Score = Score - FoodScores.Raw
+        Score = Score + FoodScores.Raw
     end
 
     if (item:isbDangerousUncooked()) then
-        Score = Score - FoodScores.Burned
+        Score = Score + FoodScores.Burned
     end
 
     local FoodType = item:getFoodType()
@@ -129,9 +122,9 @@ function GetFoodScore(item)
             Score = Score + 2
         end
     elseif (FoodType == "Coffee") then
-        Score = Score - FoodScores.Coffee
+        Score = Score + FoodScores.Coffee
     else
-        Score = Score - FoodScores.Unknown
+        Score = Score + FoodScores.Unknown
         print("Unknown food type " .. FoodType)
     end
 

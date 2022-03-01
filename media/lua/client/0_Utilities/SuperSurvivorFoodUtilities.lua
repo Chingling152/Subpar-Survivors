@@ -46,6 +46,10 @@ function isCanned(thisFood)
     return string.match(fullName,"Canned") or string.match(fullName,"Tin");
 end
 
+function isItemWater(item)
+    return ((item:isWaterSource()) and (item:getType() ~= "Bleach"))
+end
+
 function FindAndReturnFood(thisItemContainer)
     if (not thisItemContainer) then
         return nil

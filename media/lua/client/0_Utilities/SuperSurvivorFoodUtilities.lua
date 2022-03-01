@@ -1,5 +1,5 @@
 -- TODO: add berries, mushrooms and medicinal plants
-FoodsToExlude = {"Bleach", "Cigarettes", "HCCigar", "Antibiotics", "Teabag2", "Salt", "Pepper", "EggCarton"}
+FoodsToExlude = {"Bleach", "Cigarettes", "HCCigar", "Antibiotics", "Teabag2", "Salt", "EggCarton"}
 
 local FoodScores = {
     Cooked = 5,

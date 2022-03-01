@@ -524,9 +524,3 @@ function SuperSurvivorGroup:Load()
 	
 	--print ("DONE loading group#"..tostring(self.ID))
 end
-
-
-
-
-
-

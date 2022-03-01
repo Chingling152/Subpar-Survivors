@@ -39,21 +39,21 @@ function EatFoodTask:isValid()
 end
 
 function EatFoodTask:isCanned(thisFood)
-	if not thisFood then return false end
-	local dtype = thisFood:getType() .. thisFood:getDisplayName() 
-	
-	if string.match(dtype, "Canned") then return true
-	elseif (thisFood:getDisplayName() == "Dog Food") then return true
-	else return false end
+	return isCanned(thisFood) or isDogFood(thisFood)
 end
 
 function EatFoodTask:openCanned(thisFood)
 	local exceptions = {TinnedBeans = "OpenBeans"}
 
-	if not self:isCanned(thisFood) then return nil end
+	if not self:isCanned(thisFood) then 
+		return nil 
+	end
+
 	local dtype = thisFood:getFullType() .. "Open"
 	local openCan = self.parent:Get():getInventory():AddItem(dtype)
-	if (openCan ~= nil) then return openCan
+
+	if (openCan ~= nil) then 
+		return openCan
 	else 
 		print("food type\"".. dtype .. "\" Not found")
 		return self.parent:Get():getInventory():AddItem("Base.OpenBeans") 

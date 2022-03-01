@@ -228,11 +228,39 @@ if index then
     table.insert(keyBinding, index+6, {value = "Lower Follow Distance", key = 74})
     table.insert(keyBinding, index+7, {value = "Raise Follow Distance", key = 78})
    
-   table.insert(keyBinding, index+8, {value = "SSHotkey_1", key = 200})
-   table.insert(keyBinding, index+9, {value = "SSHotkey_2", key = 208})
-   table.insert(keyBinding, index+10, {value = "SSHotkey_3", key = 203})
-   table.insert(keyBinding, index+11, {value = "SSHotkey_4", key = 205})
+   	table.insert(keyBinding, index+8, {value = "SSHotkey_1", key = 200})
+   	table.insert(keyBinding, index+9, {value = "SSHotkey_2", key = 208})
+   	table.insert(keyBinding, index+10, {value = "SSHotkey_3", key = 203})
+   	table.insert(keyBinding, index+11, {value = "SSHotkey_4", key = 205})
     
+--TODO: separate UI into sections (spawn , raiders , hotkeys)
+	function MainOptions:addCustomCombo(id,splitpoint, y, comboWidth,label ,options, description)
+		local spawnrateCombo = self:addCombo(splitpoint, y, comboWidth, 20,label, options, 1)
+		if description then
+			spawnrateCombo:setToolTipMap({defaultTooltip = description});
+		end
+		
+		gameOption = GameOption:new(id, spawnrateCombo)
+		function gameOption.toUI(self)
+			local box = self.control
+			box.selected = SuperSurvivorGetOption(id)
+		end
+		function gameOption.apply(self)
+			local box = self.control
+			if box.options[box.selected] then
+				SuperSurvivorSetOption(id,box.selected)
+				print("setting " .. id ..  " option")
+			else
+				print("error could not set " .. id ..  " option")
+			end
+		end
+		function gameOption:onChange(box)
+			print("option changed to ".. tostring(box.selected))
+		end
+		
+		self.gameOptions:add(gameOption)
+	end
+
     -- store the original MainOptions:create() method in a variable
     local oldCreate = MainOptions.create
 
@@ -243,9 +271,12 @@ if index then
             -- if keyTextElement is nil or doesn't have a ISLabel, break out of the 
             -- "repeat ... until true"  loop, and continue with the "for .. do ... end" 
             -- loop
-            if not keyTextElement or not keyTextElement.txt then break end
+            if not keyTextElement or not keyTextElement.txt then 
+				break 
+			end
             
-            local label = keyTextElement.txt -- our ISLabel item is stored in keyTextElement.txt
+            local label = keyTextElement.txt 
+			-- our ISLabel item is stored in keyTextElement.txt
             -- We need to do a few things here to prep the new entries.
             -- 1) We wont have a proper translation, and the translation will be set to
             --    "UI_optionscreen_binding_Equip/Unequip Pistol", which will look funny on the 
@@ -301,8 +332,6 @@ if index then
 		   
         until true end
 		
-		
-		
 		----- Survivor options in Game Options -----
 		local spacing = 10
 	
@@ -314,702 +343,257 @@ if index then
 		local comboWidth = 300
 		local splitpoint = self:getWidth() / 3;
 	
-		
-		local options = {getText("ContextMenu_SD_Off"),getText("ContextMenu_SD_UltraLow"),getText("ContextMenu_SD_ExtremelyLow"), getText("ContextMenu_SD_VeryLow"), getText("ContextMenu_SD_Low"), getText("ContextMenu_SD_SlightlyLower"), getText("ContextMenu_SD_Normal"), getText("ContextMenu_SD_SlightlyHigher"), getText("ContextMenu_SD_High"),getText("ContextMenu_SD_VeryHigh"),getText("ContextMenu_SD_ExtremelyHigh"),getText("ContextMenu_SD_UltraHigh")}
-		local spawnrateCombo = self:addCombo(splitpoint, y, comboWidth, 20,getText("ContextMenu_SOption_SurvivorSpawnRate"), options, 1)
-		spawnrateCombo:setToolTipMap({defaultTooltip = getText("ContextMenu_SOption_SurvivorSpawnRateDesc")});
-		
-		gameOption = GameOption:new('SpawnRate', spawnrateCombo)
-		function gameOption.toUI(self)
-			local box = self.control
-			box.selected = SuperSurvivorGetOption("SpawnRate")
-		end
-		function gameOption.apply(self)
-			local box = self.control
-			if box.options[box.selected] then
-				SuperSurvivorSetOption("SpawnRate",box.selected)
-				print("setting survivor option")
-			else
-				print("error could not set survivor option")
-			end
-		end
-		function gameOption:onChange(box)
-			print("option changed to ".. tostring(box.selected))
-		end
-		self.gameOptions:add(gameOption)
-		
-		
-		
-		
+		-- SURVIVOR SPAWN RATE
+		local options = {
+			getText("ContextMenu_SD_Off"),
+			getText("ContextMenu_SD_UltraLow"),
+			getText("ContextMenu_SD_ExtremelyLow"), 
+			getText("ContextMenu_SD_VeryLow"), 
+			getText("ContextMenu_SD_Low"), 
+			getText("ContextMenu_SD_SlightlyLower"), 
+			getText("ContextMenu_SD_Normal"), 
+			getText("ContextMenu_SD_SlightlyHigher"), 
+			getText("ContextMenu_SD_High"),
+			getText("ContextMenu_SD_VeryHigh"),
+			getText("ContextMenu_SD_ExtremelyHigh"),
+			getText("ContextMenu_SD_UltraHigh")
+		}
+		self:addCustomCombo('SpawnRate',splitpoint,y,comboWidth,getText("ContextMenu_SOption_SurvivorSpawnRate"),options,getText("ContextMenu_SOption_SurvivorSpawnRateDesc"))
 		y = y + spacing
 		
-		
-		
-		local options = {getText("ContextMenu_SD_Off"),getText("ContextMenu_SD_On")}
-		local gunspawnrateCombo = self:addCombo(splitpoint, y, comboWidth, 20,getText("ContextMenu_SD_NoPreSetSpawn"), options, 1)
-		gunspawnrateCombo:setToolTipMap({defaultTooltip = getText("ContextMenu_SD_NoPreSetSpawnDesc")});
-		
-		gameOption = GameOption:new('NoPreSetSpawn', gunspawnrateCombo)
-		function gameOption.toUI(self)
-			local box = self.control
-			box.selected = SuperSurvivorGetOption("NoPreSetSpawn")
-		end
-		function gameOption.apply(self)
-			local box = self.control
-			if box.options[box.selected] then
-				SuperSurvivorSetOption("NoPreSetSpawn",box.selected)
-				print("setting survivor option")
-			else
-				print("error could not set survivor option")
-			end
-		end
-		function gameOption:onChange(box)
-			print("option changed to ".. tostring(box.selected))
-		end
-		self.gameOptions:add(gameOption)
-		
+		-- PRE SET SPAWN 
+
+		local options = {
+			getText("ContextMenu_SD_Off"),
+			getText("ContextMenu_SD_On")
+		}
+		self:addCustomCombo('NoPreSetSpawn',splitpoint,y,comboWidth,getText("ContextMenu_SD_NoPreSetSpawn"),options,getText("ContextMenu_SD_NoPreSetSpawnDesc"))	
+		y = y + spacing
+
+		-- GUN SPAWN RATE
+
+		local options = {
+			"0%","1%","2%",
+			"5%","10%","15%","20%",
+			"25%","30%","35%","40%",
+			"45%","50%","55%","60%",
+			"65%","70%","75%","80%",
+			"85%","90%","95%","100%"
+		}
+		self:addCustomCombo('GunSpawnRate',splitpoint,y,comboWidth,getText("ContextMenu_SOption_ChancetoSpawnWithGun"),options,getText("ContextMenu_SOption_ChancetoSpawnWithGunDesc"))
+		y = y + spacing
+
+		-- WEAPON SPAWN RATE
+
+		local options = {
+			"0%","1%","2%",
+			"5%","10%","15%","20%",
+			"25%","30%","35%","40%",
+			"45%","50%","55%","60%",
+			"65%","70%","75%","80%",
+			"85%","90%","95%","100%"
+		}
+
+		self:addCustomCombo('WepSpawnRate',splitpoint,y,comboWidth,getText("ContextMenu_SOption_WepSpawnRate"),options,getText("ContextMenu_SOption_WepSpawnRateDesc"))
 		
 		y = y + spacing
-		
-		
-		
-		local options = {"0%","1%","2%","5%","10%","15%","20%","25%","30%","35%","40%","45%","50%","55%","60%","65%","70%","75%","80%","85%","90%","95%","100%"}
-		local gunspawnrateCombo = self:addCombo(splitpoint, y, comboWidth, 20,getText("ContextMenu_SOption_ChancetoSpawnWithGun"), options, 1)
-		gunspawnrateCombo:setToolTipMap({defaultTooltip = getText("ContextMenu_SOption_ChancetoSpawnWithGunDesc")});
-		
-	
-		gameOption = GameOption:new('GunSpawnRate', gunspawnrateCombo)
-		function gameOption.toUI(self)
-			local box = self.control
-			box.selected = SuperSurvivorGetOption("GunSpawnRate")
-			--MainOptions.instance.reloadLabel.name = ReloadManager[1]:getDifficultyDescription(box.selected):gsub("\\n", "\n")
-		end
-		function gameOption.apply(self)
-			local box = self.control
-			if box.options[box.selected] then
-				SuperSurvivorSetOption("GunSpawnRate",box.selected)
-				print("setting survivor option")
-			else
-				print("error could not set survivor option")
-			end
-		end
-		function gameOption:onChange(box)
-			print("option changed to ".. tostring(box.selected))
-			--MainOptions.instance.reloadLabel.name = ReloadManager[1]:getDifficultyDescription(box.selected):gsub("\\n", "\n")
-		end
-		self.gameOptions:add(gameOption)
-		
-		
-		--- raiders --- start
-		
+
+		-- HOSTILE CHANCE
+
+		local options = {
+			"0%",
+			"5%","10%","15%","20%",
+			"25%","30%","35%","40%",
+			"45%","50%","55%","60%",
+			"65%","70%","75%","80%",
+			"85%","90%","95%","100%"
+		}
+		self:addCustomCombo('HostileSpawnRate',splitpoint,y,comboWidth,getText("ContextMenu_SOption_ChancetobeHostile"),options,getText("ContextMenu_SOption_ChancetobeHostileDesc"))
+				
 		y = y + spacing
+
+		-- HOSTILE OVER TIME SPAWN RATE
+		local options = {
+			"0%",
+			"5%","10%","15%","20%",
+			"25%","30%","35%","40%",
+			"45%","50%","55%","60%",
+			"65%","70%","75%","80%",
+			"85%","90%","95%","100%"
+		}
+		self:addCustomCombo('MaxHostileSpawnRate',splitpoint,y,comboWidth,getText("ContextMenu_SOption_MaxHostileSpawnRate"),options,getText("ContextMenu_SOption_MaxHostileSpawnRateDesc"))
 		
+		y = y + spacing	
 		
-		
-		local options = {getText("ContextMenu_SD_Every5Days"), getText("ContextMenu_SD_Every10Days"), getText("ContextMenu_SD_Every15Days"), getText("ContextMenu_SD_Every20Days"), getText("ContextMenu_SD_Every25Days"), getText("ContextMenu_SD_Every30Days"), getText("ContextMenu_SD_Every35Days"), getText("ContextMenu_SD_Every40Days"), getText("ContextMenu_SD_Every45Days"), getText("ContextMenu_SD_Every50Days"), getText("ContextMenu_SD_Every55Days"), getText("ContextMenu_SD_Every60Days"), getText("ContextMenu_SD_Every65Days"), getText("ContextMenu_SD_Every70Days"), getText("ContextMenu_SD_Every75Days"), getText("ContextMenu_SD_Every80Days"), getText("ContextMenu_SD_Every85Days"), getText("ContextMenu_SD_Every90Days"), getText("ContextMenu_SD_Every95Days"), getText("ContextMenu_SD_Every100Days"),getText("ContextMenu_SD_EveryDay"),getText("ContextMenu_SD_EveryHour"),getText("ContextMenu_SD_Every10Minutes")}
-		local gunspawnrateCombo = self:addCombo(splitpoint, y, comboWidth, 20, getText("ContextMenu_SOption_RaidersGuaranteed"), options, 1)
-		gunspawnrateCombo:setToolTipMap({defaultTooltip = getText("ContextMenu_SOption_RaidersGuaranteedDesc")});
-		
-		gameOption = GameOption:new('RaidersAtLeastHours', gunspawnrateCombo)
-		function gameOption.toUI(self)
-			local box = self.control
-			box.selected = SuperSurvivorGetOption("RaidersAtLeastHours")
-		end
-		function gameOption.apply(self)
-			local box = self.control
-			if box.options[box.selected] then
-				SuperSurvivorSetOption("RaidersAtLeastHours",box.selected)
-				print("setting survivor option")
-			else
-				print("error could not set survivor option")
-			end
-		end
-		function gameOption:onChange(box)
-			print("option changed to ".. tostring(box.selected))
-		end
-		self.gameOptions:add(gameOption)
-		
-		
-		
-		
-		
-		y = y + spacing
-		
-		
+		-- WIFE SPAWN
 		
 		local options = {
-			getText("ContextMenu_SD_StartImmediately"),
-			getText("ContextMenu_SD_AfterDay1"), 
-			getText("ContextMenu_SD_AfterDay5"), 
-			getText("ContextMenu_SD_AfterDay10"), 
-			getText("ContextMenu_SD_AfterDay15"), 
-			getText("ContextMenu_SD_AfterDay20"), 
-			getText("ContextMenu_SD_AfterDay25"), 
-			getText("ContextMenu_SD_AfterDay30"), 
-			getText("ContextMenu_SD_AfterDay35"), 
-			getText("ContextMenu_SD_AfterDay40"), 
-			getText("ContextMenu_SD_AfterDay45"), 
-			getText("ContextMenu_SD_AfterDay50"), 
-			getText("ContextMenu_SD_AfterDay55"), 
-			getText("ContextMenu_SD_AfterDay60"),
-			getText("ContextMenu_SD_AfterDay65"), 
-			getText("ContextMenu_SD_AfterDay70"), 
-			getText("ContextMenu_SD_AfterDay75"), 
-			getText("ContextMenu_SD_AfterDay80"), 
-			getText("ContextMenu_SD_AfterDay85"), 
-			getText("ContextMenu_SD_AfterDay90"), 
-			getText("ContextMenu_SD_AfterDay95"),
-			getText("ContextMenu_SD_Never")}
+			getText("ContextMenu_SD_Off"),
+			getText("ContextMenu_SD_On")
+		}
+
+		self:addCustomCombo('WifeSpawn',splitpoint,y,comboWidth,getText("ContextMenu_SOption_WifeSpawn"),options,getText("ContextMenu_SOption_WifeSpawnDesc"))
+		y = y + spacing
+
+		-- READY FOR BATTLE
+		
+		local options = {
+			getText("ContextMenu_SD_Off"),
+			getText("ContextMenu_SD_On")
+		}
+		
+		self:addCustomCombo('LockNLoad',splitpoint,y,comboWidth,getText("ContextMenu_SOption_LockNLoad"),options,getText("ContextMenu_SOption_LockNLoadDesc"))
+		y = y + spacing
+
+		----- RAIDERS 
+
+		--- RAIDERS ATTACK FREQUENCY
+		
+		local options = {
+			getText("ContextMenu_SD_Every5Days"), getText("ContextMenu_SD_Every10Days"), getText("ContextMenu_SD_Every15Days"), getText("ContextMenu_SD_Every20Days"), 
+			getText("ContextMenu_SD_Every25Days"), getText("ContextMenu_SD_Every30Days"), getText("ContextMenu_SD_Every35Days"), getText("ContextMenu_SD_Every40Days"), 
+			getText("ContextMenu_SD_Every45Days"), getText("ContextMenu_SD_Every50Days"), getText("ContextMenu_SD_Every55Days"), getText("ContextMenu_SD_Every60Days"), 
+			getText("ContextMenu_SD_Every65Days"), getText("ContextMenu_SD_Every70Days"), getText("ContextMenu_SD_Every75Days"), getText("ContextMenu_SD_Every80Days"), 
+			getText("ContextMenu_SD_Every85Days"), getText("ContextMenu_SD_Every90Days"), getText("ContextMenu_SD_Every95Days"), getText("ContextMenu_SD_Every100Days"),
+			getText("ContextMenu_SD_EveryDay"), getText("ContextMenu_SD_EveryHour"), getText("ContextMenu_SD_Every10Minutes")
+		}
+
+		self:addCustomCombo('RaidersAtLeastHours',splitpoint,y,comboWidth,getText("ContextMenu_SOption_RaidersGuaranteed"),options,getText("ContextMenu_SOption_RaidersGuaranteedDesc"))
+		
+		y = y + spacing
+		
+		--- RAIDERS ATTACK START
+		local options = {
+			getText("ContextMenu_SD_StartImmediately"),getText("ContextMenu_SD_AfterDay1"), 
+			getText("ContextMenu_SD_AfterDay5"),  getText("ContextMenu_SD_AfterDay10"), getText("ContextMenu_SD_AfterDay15"), getText("ContextMenu_SD_AfterDay20"), 
+			getText("ContextMenu_SD_AfterDay25"), getText("ContextMenu_SD_AfterDay30"), getText("ContextMenu_SD_AfterDay35"), getText("ContextMenu_SD_AfterDay40"), 
+			getText("ContextMenu_SD_AfterDay45"), getText("ContextMenu_SD_AfterDay50"), getText("ContextMenu_SD_AfterDay55"), getText("ContextMenu_SD_AfterDay60"),
+			getText("ContextMenu_SD_AfterDay65"), getText("ContextMenu_SD_AfterDay70"), getText("ContextMenu_SD_AfterDay75"), getText("ContextMenu_SD_AfterDay80"), 
+			getText("ContextMenu_SD_AfterDay85"), getText("ContextMenu_SD_AfterDay90"), getText("ContextMenu_SD_AfterDay95"), getText("ContextMenu_SD_Never")
+		}
+		self:addCustomCombo('RaidersAfterHours',splitpoint,y,comboWidth,getText("ContextMenu_SOption_RaidersAfterHours"),options,getText("ContextMenu_SOption_RaidersAfterHoursDesc"))
+		
+		y = y + spacing
+		
+		-- RAIDERS CHANCE
+		
+		local options = {
+			getText("ContextMenu_SD_VeryHigh"), getText("ContextMenu_SD_High"),
+			getText("ContextMenu_SD_Normal"),
+			getText("ContextMenu_SD_Low"),getText("ContextMenu_SD_VeryLow")
+		}
+		
+		self:addCustomCombo('RaidersChance',splitpoint,y,comboWidth,getText("ContextMenu_SOption_RaidersChance"),options,getText("ContextMenu_SOption_RaidersChanceDesc"))
+		
+		y = y + spacing			
+
+		----- END RAIDERS
+
+		--- SURVIVOR BEHAVIOR
+		
+		--- SURVIVOR FRIENDLINESS
+
+		local options = {
+			getText("ContextMenu_SD_DesperateforHumanContact"), 
+			getText("ContextMenu_SD_VeryFriendly"), 
+			getText("ContextMenu_SD_Friendly"), 
+			getText("ContextMenu_SD_Normal"), 
+			getText("ContextMenu_SD_Mean"), 
+			getText("ContextMenu_SD_VeryMean")
+		}
+		self:addCustomCombo('SurvivorFriendliness',splitpoint,y,comboWidth,getText("ContextMenu_SOption_SurvivorFriendliness"),options,getText("ContextMenu_SOption_SurvivorFriendlinessDesc"))
+		y = y + spacing
+		
+		--- SURVIVOR BRAVERY
+		
+		local options = {
+			getText("ContextMenu_SD_Cowardly"), 
+			getText("ContextMenu_SD_Normal"),
+			getText("ContextMenu_SD_Brave"), 
+			getText("ContextMenu_SD_VeryBrave")
+		}
+		self:addCustomCombo('Bravery',splitpoint,y,comboWidth,getText("ContextMenu_SOption_SurvivorBravery"),options,getText("ContextMenu_SOption_SurvivorBraveryDesc"))
+		y = y + spacing
+		
+		--- SURVIVOR INFINITE AMMO
+		
+		local options = {
+			getText("ContextMenu_SD_Off"),
+			getText("ContextMenu_SD_On")
+		}
+		self:addCustomCombo('InfinitAmmo',splitpoint,y,comboWidth,getText("ContextMenu_SOption_InfinitAmmo"),options,getText("ContextMenu_SOption_InfinitAmmoDesc"))
+		y = y + spacing
+		
+		--- SURVIVOR BASE AUTONOMY
+		
+		local options = {
+			getText("ContextMenu_SD_On"),
+			getText("ContextMenu_SD_Off")
+		}
+		self:addCustomCombo('FindWork',splitpoint,y,comboWidth,getText("ContextMenu_SOption_FindWork"),options,getText("ContextMenu_SOption_FindWorkDesc"))
+		y = y + spacing
+		
+		--- SURVIVOR UNGER AND THIRSTY		
+
+		local options = {
+			getText("ContextMenu_SD_On"),
+			getText("ContextMenu_SD_Off")
+		}
+		self:addCustomCombo('SurvivorHunger',splitpoint,y,comboWidth,getText("ContextMenu_SOption_SurvivorHunger"),options,getText("ContextMenu_SOption_SurvivorHungerDesc"))
+		y = y + spacing
+		
+		--- SAFE BASE 
+		local options = {
+			getText("ContextMenu_SD_Off"),
+			getText("ContextMenu_SD_On")
+		}
+		self:addCustomCombo('SafeBase',splitpoint,y,comboWidth,getText("ContextMenu_SOption_SafeBase"),options,getText("ContextMenu_SOption_SafeBaseDesc"))
+		y = y + spacing
+		
+		--- SURVIVOR BASES
+		
+		local options = {
+			getText("ContextMenu_SD_Off"),
+			getText("ContextMenu_SD_On")
+		}
+		self:addCustomCombo('SurvivorBases',splitpoint,y,comboWidth,getText("ContextMenu_SOption_SurvivorBases"),options,getText("ContextMenu_SOption_SurvivorBasesDesc"))		
+		y = y + spacing
+		
+		--- END SURVIVOR BEHAVIOR
+
+		----- DEBUG
+
+		--- DEBUG OPTIONS
+		
+		local options = {
+			getText("ContextMenu_SD_Off"),
+			getText("ContextMenu_SD_On")
+		}
+		self:addCustomCombo('DebugOptions',splitpoint,y,comboWidth,getText("ContextMenu_SOption_DebugOptions"),options,getText("ContextMenu_SOption_DebugOptionsDesc"))			
+		y = y + spacing
+		
+		----- END DEBUG
+		
+		----- HOTKEYS
+		
+		local options = SSHotKeyOptions
+		self:addCustomCombo('SSHotkey1',splitpoint,y,comboWidth,getText("ContextMenu_SShotkey1"),options,getText("ContextMenu_SShotkeyDesc"))					
+		y = y + spacing
+		
+		local options = SSHotKeyOptions
+		self:addCustomCombo('SSHotkey2',splitpoint,y,comboWidth,getText("ContextMenu_SShotkey2"),options,getText("ContextMenu_SShotkeyDesc"))					
+		y = y + spacing
+
+		local options = SSHotKeyOptions
+		self:addCustomCombo('SSHotkey3',splitpoint,y,comboWidth,getText("ContextMenu_SShotkey3"),options,getText("ContextMenu_SShotkeyDesc"))					
+		y = y + spacing
+
+		local options = SSHotKeyOptions
+		self:addCustomCombo('SSHotkey4',splitpoint,y,comboWidth,getText("ContextMenu_SShotkey4"),options,getText("ContextMenu_SShotkeyDesc"))		
+
+		------ HOTKEYS END
 	
-		local gunspawnrateCombo = self:addCombo(splitpoint, y, comboWidth, 20,getText("ContextMenu_SOption_RaidersAfterHours"), options, 1)
-		gunspawnrateCombo:setToolTipMap({defaultTooltip = getText("ContextMenu_SOption_RaidersAfterHoursDesc")});
-		
-		
-		gameOption = GameOption:new('RaidersAfterHours', gunspawnrateCombo)
-		function gameOption.toUI(self)
-			local box = self.control
-			box.selected = SuperSurvivorGetOption("RaidersAfterHours")
-		end
-		function gameOption.apply(self)
-			local box = self.control
-			if box.options[box.selected] then
-				SuperSurvivorSetOption("RaidersAfterHours",box.selected)
-				print("setting survivor option")
-			else
-				print("error could not set survivor option")
-			end
-		end
-		function gameOption:onChange(box)
-			print("option changed to ".. tostring(box.selected))
-		end
-		self.gameOptions:add(gameOption)
-		
-		
-		
-		
-		
-		y = y + spacing
-		
-		
-		
-		local options = {getText("ContextMenu_SD_VeryHigh"),getText("ContextMenu_SD_High"),getText("ContextMenu_SD_Normal"),getText("ContextMenu_SD_Low"),getText("ContextMenu_SD_VeryLow")}
-		--MainOptions.reloadLabel = ISLabel:new(self.width / 3 - 100, y + 40, 20, '', 1, 1, 1, 1, UIFont.Small)
-		--self.mainPanel:addChild(MainOptions.reloadLabel)
-		local gunspawnrateCombo = self:addCombo(splitpoint, y, comboWidth, 20,getText("ContextMenu_SOption_RaidersChance"), options, 1)
-		gunspawnrateCombo:setToolTipMap({defaultTooltip = getText("ContextMenu_SOption_RaidersChanceDesc")});
-		
-		gameOption = GameOption:new('RaidersChance', gunspawnrateCombo)
-		function gameOption.toUI(self)
-			local box = self.control
-			box.selected = SuperSurvivorGetOption("RaidersChance")
-			--MainOptions.instance.reloadLabel.name = ReloadManager[1]:getDifficultyDescription(box.selected):gsub("\\n", "\n")
-		end
-		function gameOption.apply(self)
-			local box = self.control
-			if box.options[box.selected] then
-				SuperSurvivorSetOption("RaidersChance",box.selected)
-				print("setting survivor option")
-			else
-				print("error could not set survivor option")
-			end
-		end
-		function gameOption:onChange(box)
-			print("option changed to ".. tostring(box.selected))
-			--MainOptions.instance.reloadLabel.name = ReloadManager[1]:getDifficultyDescription(box.selected):gsub("\\n", "\n")
-		end
-		self.gameOptions:add(gameOption)
-		
-		
-		--- raiders --- end
-		
-		
-		y = y + spacing
-		
-		
-		
-		local options = {"0%","5%","10%","15%","20%","25%","30%","35%","40%","45%","50%","55%","60%","65%","70%","75%","80%","85%","90%","95%","100%"}
-		--MainOptions.reloadLabel = ISLabel:new(self.width / 3 - 100, y + 40, 20, '', 1, 1, 1, 1, UIFont.Small)
-		--self.mainPanel:addChild(MainOptions.reloadLabel)
-		local gunspawnrateCombo = self:addCombo(splitpoint, y, comboWidth, 20,getText("ContextMenu_SOption_WepSpawnRate"), options, 1)
-		gunspawnrateCombo:setToolTipMap({defaultTooltip = getText("ContextMenu_SOption_WepSpawnRateDesc")});
-		
-		gameOption = GameOption:new('WepSpawnRate', gunspawnrateCombo)
-		function gameOption.toUI(self)
-			local box = self.control
-			box.selected = SuperSurvivorGetOption("WepSpawnRate")
-			--MainOptions.instance.reloadLabel.name = ReloadManager[1]:getDifficultyDescription(box.selected):gsub("\\n", "\n")
-		end
-		function gameOption.apply(self)
-			local box = self.control
-			if box.options[box.selected] then
-				SuperSurvivorSetOption("WepSpawnRate",box.selected)
-				print("setting survivor option")
-			else
-				print("error could not set survivor option")
-			end
-		end
-		function gameOption:onChange(box)
-			print("option changed to ".. tostring(box.selected))
-			--MainOptions.instance.reloadLabel.name = ReloadManager[1]:getDifficultyDescription(box.selected):gsub("\\n", "\n")
-		end
-		self.gameOptions:add(gameOption)
-		
-		
-		
-		
-		
-		y = y + spacing
-		
-		
-		
-		local options = {"0%","5%","10%","15%","20%","25%","30%","35%","40%","45%","50%","55%","60%","65%","70%","75%","80%","85%","90%","95%","100%"}
-		--MainOptions.reloadLabel = ISLabel:new(self.width / 3 - 100, y + 40, 20, '', 1, 1, 1, 1, UIFont.Small)
-		--self.mainPanel:addChild(MainOptions.reloadLabel)
-		local gunspawnrateCombo = self:addCombo(splitpoint, y, comboWidth, 20,getText("ContextMenu_SOption_ChancetobeHostile"), options, 1)
-		gunspawnrateCombo:setToolTipMap({defaultTooltip = getText("ContextMenu_SOption_ChancetobeHostileDesc")});
-		
-		
-		gameOption = GameOption:new('HostileSpawnRate', gunspawnrateCombo)
-		function gameOption.toUI(self)
-			local box = self.control
-			box.selected = SuperSurvivorGetOption("HostileSpawnRate")
-			--MainOptions.instance.reloadLabel.name = ReloadManager[1]:getDifficultyDescription(box.selected):gsub("\\n", "\n")
-		end
-		function gameOption.apply(self)
-			local box = self.control
-			if box.options[box.selected] then
-				SuperSurvivorSetOption("HostileSpawnRate",box.selected)
-				print("setting survivor option")
-			else
-				print("error could not set survivor option")
-			end
-		end
-		function gameOption:onChange(box)
-			print("option changed to ".. tostring(box.selected))
-			--MainOptions.instance.reloadLabel.name = ReloadManager[1]:getDifficultyDescription(box.selected):gsub("\\n", "\n")
-		end
-		self.gameOptions:add(gameOption)
-		
-		
-		y = y + spacing
-		
-		
-		
-		local options = {"0%","5%","10%","15%","20%","25%","30%","35%","40%","45%","50%","55%","60%","65%","70%","75%","80%","85%","90%","95%","100%"}
-		--MainOptions.reloadLabel = ISLabel:new(self.width / 3 - 100, y + 40, 20, '', 1, 1, 1, 1, UIFont.Small)
-		--self.mainPanel:addChild(MainOptions.reloadLabel)
-		local gunspawnrateCombo = self:addCombo(splitpoint, y, comboWidth, 20,getText("ContextMenu_SOption_MaxHostileSpawnRate"), options, 1)
-		gunspawnrateCombo:setToolTipMap({defaultTooltip = getText("ContextMenu_SOption_MaxHostileSpawnRateDesc")});
-		
-		gameOption = GameOption:new('MaxHostileSpawnRate', gunspawnrateCombo)
-		function gameOption.toUI(self)
-			local box = self.control
-			box.selected = SuperSurvivorGetOption("MaxHostileSpawnRate")
-			--MainOptions.instance.reloadLabel.name = ReloadManager[1]:getDifficultyDescription(box.selected):gsub("\\n", "\n")
-		end
-		function gameOption.apply(self)
-			local box = self.control
-			if box.options[box.selected] then
-				SuperSurvivorSetOption("MaxHostileSpawnRate",box.selected)
-				print("setting survivor option")
-			else
-				print("error could not set survivor option")
-			end
-		end
-		function gameOption:onChange(box)
-			print("option changed to ".. tostring(box.selected))
-			--MainOptions.instance.reloadLabel.name = ReloadManager[1]:getDifficultyDescription(box.selected):gsub("\\n", "\n")
-		end
-		self.gameOptions:add(gameOption)
-		
-		
-		
-		
-		y = y + spacing
-		
-		
-		
-		local options = {getText("ContextMenu_SD_Off"),getText("ContextMenu_SD_On")}
-		local gunspawnrateCombo = self:addCombo(splitpoint, y, comboWidth, 20,getText("ContextMenu_SOption_LockNLoad"), options, 1)
-		gunspawnrateCombo:setToolTipMap({defaultTooltip = getText("ContextMenu_SOption_LockNLoadDesc")});
-		
-		gameOption = GameOption:new('LockNLoad', gunspawnrateCombo)
-		function gameOption.toUI(self)
-			local box = self.control
-			box.selected = SuperSurvivorGetOption("LockNLoad")
-		end
-		function gameOption.apply(self)
-			local box = self.control
-			if box.options[box.selected] then
-				SuperSurvivorSetOption("LockNLoad",box.selected)
-				print("setting survivor option")
-			else
-				print("error could not set survivor option")
-			end
-		end
-		function gameOption:onChange(box)
-			print("option changed to ".. tostring(box.selected))
-		end
-		self.gameOptions:add(gameOption)
-		
-		y = y + spacing
-		
-		
-		
-		local options = {getText("ContextMenu_SD_Off"),getText("ContextMenu_SD_On")}
-		local gunspawnrateCombo = self:addCombo(splitpoint, y, comboWidth, 20,getText("ContextMenu_SOption_WifeSpawn"), options, 1)
-		gunspawnrateCombo:setToolTipMap({defaultTooltip = getText("ContextMenu_SOption_WifeSpawnDesc") });
-		
-		gameOption = GameOption:new('WifeSpawn', gunspawnrateCombo)
-		function gameOption.toUI(self)
-			local box = self.control
-			box.selected = SuperSurvivorGetOption("WifeSpawn")
-		end
-		function gameOption.apply(self)
-			local box = self.control
-			if box.options[box.selected] then
-				SuperSurvivorSetOption("WifeSpawn",box.selected)
-				print("setting survivor option")
-			else
-				print("error could not set survivor option")
-			end
-		end
-		function gameOption:onChange(box)
-			print("option changed to ".. tostring(box.selected))
-		end
-		self.gameOptions:add(gameOption)
-		
-		
-			y = y + spacing
-		
-		
-		
-		local options = {getText("ContextMenu_SD_DesperateforHumanContact"), getText("ContextMenu_SD_VeryFriendly"), getText("ContextMenu_SD_Friendly"), getText("ContextMenu_SD_Normal"), getText("ContextMenu_SD_Mean"), getText("ContextMenu_SD_VeryMean")}
-		local gunspawnrateCombo = self:addCombo(splitpoint, y, comboWidth, 20,getText("ContextMenu_SOption_SurvivorFriendliness"), options, 1)
-		gunspawnrateCombo:setToolTipMap({defaultTooltip = getText("ContextMenu_SOption_SurvivorFriendlinessDesc")});
-		
-		gameOption = GameOption:new('SurvivorFriendliness', gunspawnrateCombo)
-		function gameOption.toUI(self)
-			local box = self.control
-			box.selected = SuperSurvivorGetOption("SurvivorFriendliness")
-		end
-		function gameOption.apply(self)
-			local box = self.control
-			if box.options[box.selected] then
-				SuperSurvivorSetOption("SurvivorFriendliness",box.selected)
-				print("setting survivor option")
-			else
-				print("error could not set survivor option")
-			end
-		end
-		function gameOption:onChange(box)
-			print("option changed to ".. tostring(box.selected))
-		end
-		self.gameOptions:add(gameOption)
-		
-		
-			y = y + spacing
-		
-		
-		
-		local options = {getText("ContextMenu_SD_Cowardly"), getText("ContextMenu_SD_Normal"), getText("ContextMenu_SD_Brave"), getText("ContextMenu_SD_VeryBrave")}
-		local gunspawnrateCombo = self:addCombo(splitpoint, y, comboWidth, 20,getText("ContextMenu_SOption_SurvivorBravery"), options, 1)
-		gunspawnrateCombo:setToolTipMap({defaultTooltip = getText("ContextMenu_SOption_SurvivorBraveryDesc")});
-		
-		gameOption = GameOption:new('Bravery', gunspawnrateCombo)
-		function gameOption.toUI(self)
-			local box = self.control
-			box.selected = SuperSurvivorGetOption("Bravery")
-		end
-		function gameOption.apply(self)
-			local box = self.control
-			if box.options[box.selected] then
-				SuperSurvivorSetOption("Bravery",box.selected)
-				print("setting survivor option")
-			else
-				print("error could not set survivor option")
-			end
-		end
-		function gameOption:onChange(box)
-			print("option changed to ".. tostring(box.selected))
-		end
-		self.gameOptions:add(gameOption)
-		
-		
-			y = y + spacing
-		
-		
-		
-		local options = {getText("ContextMenu_SD_Off"),getText("ContextMenu_SD_On")}
-		local gunspawnrateCombo = self:addCombo(splitpoint, y, comboWidth, 20,getText("ContextMenu_SOption_InfinitAmmo"), options, 1)
-		gunspawnrateCombo:setToolTipMap({defaultTooltip = getText("ContextMenu_SOption_InfinitAmmoDesc")});
-		
-		gameOption = GameOption:new('InfinitAmmo', gunspawnrateCombo)
-		function gameOption.toUI(self)
-			local box = self.control
-			box.selected = SuperSurvivorGetOption("InfinitAmmo")
-		end
-		function gameOption.apply(self)
-			local box = self.control
-			if box.options[box.selected] then
-				SuperSurvivorSetOption("InfinitAmmo",box.selected)
-				print("setting survivor option")
-			else
-				print("error could not set survivor option")
-			end
-		end
-		function gameOption:onChange(box)
-			print("option changed to ".. tostring(box.selected))
-		end
-		self.gameOptions:add(gameOption)
-		
-		
-		y = y + spacing
-		
-		
-		
-		local options = {getText("ContextMenu_SD_On"),getText("ContextMenu_SD_Off")}
-		local gunspawnrateCombo = self:addCombo(splitpoint, y, comboWidth, 20,getText("ContextMenu_SOption_FindWork"), options, 1)
-		gunspawnrateCombo:setToolTipMap({defaultTooltip = getText("ContextMenu_SOption_FindWorkDesc")});
-		
-		gameOption = GameOption:new('FindWork', gunspawnrateCombo)
-		function gameOption.toUI(self)
-			local box = self.control
-			box.selected = SuperSurvivorGetOption("FindWork")
-		end
-		function gameOption.apply(self)
-			local box = self.control
-			if box.options[box.selected] then
-				SuperSurvivorSetOption("FindWork",box.selected)
-				print("setting survivor option")
-			else
-				print("error could not set survivor option")
-			end
-		end
-		function gameOption:onChange(box)
-			print("option changed to ".. tostring(box.selected))
-		end
-		self.gameOptions:add(gameOption)
-		
-		
-		y = y + spacing
-		
-		
-		
-		local options = {getText("ContextMenu_SD_On"),getText("ContextMenu_SD_Off")}
-		local gunspawnrateCombo = self:addCombo(splitpoint, y, comboWidth, 20,getText("ContextMenu_SOption_SurvivorHunger"), options, 1)
-		gunspawnrateCombo:setToolTipMap({defaultTooltip = getText("ContextMenu_SOption_SurvivorHungerDesc")});
-		
-		gameOption = GameOption:new('SurvivorHunger', gunspawnrateCombo)
-		function gameOption.toUI(self)
-			local box = self.control
-			box.selected = SuperSurvivorGetOption("SurvivorHunger")
-		end
-		function gameOption.apply(self)
-			local box = self.control
-			if box.options[box.selected] then
-				SuperSurvivorSetOption("SurvivorHunger",box.selected)
-				print("setting survivor option")
-			else
-				print("error could not set survivor option")
-			end
-		end
-		function gameOption:onChange(box)
-			print("option changed to ".. tostring(box.selected))
-		end
-		self.gameOptions:add(gameOption)
-		
-		
-		y = y + spacing
-		
-		
-		
-		local options = {getText("ContextMenu_SD_Off"),getText("ContextMenu_SD_On")}
-		local SafeBaseOptionsCombo = self:addCombo(splitpoint, y, comboWidth, 20, getText("ContextMenu_SOption_SafeBase"), options, 1)
-		SafeBaseOptionsCombo:setToolTipMap({defaultTooltip = getText("ContextMenu_SOption_SafeBaseDesc")});
-		
-		gameOption = GameOption:new('SafeBase', SafeBaseOptionsCombo)
-		function gameOption.toUI(self)
-			local box = self.control
-			box.selected = SuperSurvivorGetOption("SafeBase")
-		end
-		function gameOption.apply(self)
-			local box = self.control
-			if box.options[box.selected] then
-				SuperSurvivorSetOption("SafeBase",box.selected)
-				print("setting survivor option")
-			else
-				print("error could not set survivor option")
-			end
-		end
-		function gameOption:onChange(box)
-			print("option changed to ".. tostring(box.selected))
-		end
-		self.gameOptions:add(gameOption)
-		
-		
-		y = y + spacing
-		
-		
-		
-		local options = {getText("ContextMenu_SD_Off"),getText("ContextMenu_SD_On")}
-		local SurvivorBasesOptionsCombo = self:addCombo(splitpoint, y, comboWidth, 20, getText("ContextMenu_SOption_SurvivorBases"), options, 1)
-		SurvivorBasesOptionsCombo:setToolTipMap({defaultTooltip = getText("ContextMenu_SOption_SurvivorBasesDesc")});
-		
-		gameOption = GameOption:new('SurvivorBases', SurvivorBasesOptionsCombo)
-		function gameOption.toUI(self)
-			local box = self.control
-			box.selected = SuperSurvivorGetOption("SurvivorBases")
-		end
-		function gameOption.apply(self)
-			local box = self.control
-			if box.options[box.selected] then
-				SuperSurvivorSetOption("SurvivorBases",box.selected)
-				print("setting survivor option")
-			else
-				print("error could not set survivor option")
-			end
-		end
-		function gameOption:onChange(box)
-			print("option changed to ".. tostring(box.selected))
-		end
-		self.gameOptions:add(gameOption)
-		
-		
-		y = y + spacing
-		
-		
-		
-		local options = {getText("ContextMenu_SD_Off"),getText("ContextMenu_SD_On")}
-		local DebugOptionsCombo = self:addCombo(splitpoint, y, comboWidth, 20, getText("ContextMenu_SOption_DebugOptions"), options, 1)
-		DebugOptionsCombo:setToolTipMap({defaultTooltip = getText("ContextMenu_SOption_DebugOptionsDesc")});
-		
-		gameOption = GameOption:new('DebugOptions', DebugOptionsCombo)
-		function gameOption.toUI(self)
-			local box = self.control
-			box.selected = SuperSurvivorGetOption("DebugOptions")
-		end
-		function gameOption.apply(self)
-			local box = self.control
-			if box.options[box.selected] then
-				SuperSurvivorSetOption("DebugOptions",box.selected)
-				print("setting survivor option")
-			else
-				print("error could not set survivor option")
-			end
-		end
-		function gameOption:onChange(box)
-			print("option changed to ".. tostring(box.selected))
-		end
-		self.gameOptions:add(gameOption)
-		
-		------hot keys-------
-		
-		y = y + spacing
-		
-		
-		
-		local options = SSHotKeyOptions
-		local gunspawnrateCombo = self:addCombo(splitpoint, y, comboWidth, 20,getText("ContextMenu_SShotkey1"), options, 1)
-		gunspawnrateCombo:setToolTipMap({defaultTooltip = getText("ContextMenu_SShotkeyDesc")});
-		
-		gameOption = GameOption:new('SSHotkey1', gunspawnrateCombo)
-		function gameOption.toUI(self)
-			local box = self.control
-			box.selected = SuperSurvivorGetOption("SSHotkey1")
-		end
-		function gameOption.apply(self)
-			local box = self.control
-			if box.options[box.selected] then
-				SuperSurvivorSetOption("SSHotkey1",box.selected)
-				print("setting survivor option")
-			else
-				print("error could not set survivor option")
-			end
-		end
-		function gameOption:onChange(box)
-			print("option changed to ".. tostring(box.selected))
-		end
-		self.gameOptions:add(gameOption)
-		
-		y = y + spacing
-		
-		local options = SSHotKeyOptions
-		local gunspawnrateCombo = self:addCombo(splitpoint, y, comboWidth, 20,getText("ContextMenu_SShotkey2"), options, 1)
-		gunspawnrateCombo:setToolTipMap({defaultTooltip = getText("ContextMenu_SShotkeyDesc")});
-		
-		gameOption = GameOption:new('SSHotkey2', gunspawnrateCombo)
-		function gameOption.toUI(self)
-			local box = self.control
-			box.selected = SuperSurvivorGetOption("SSHotkey2")
-		end
-		function gameOption.apply(self)
-			local box = self.control
-			if box.options[box.selected] then
-				SuperSurvivorSetOption("SSHotkey2",box.selected)
-				print("setting survivor option")
-			else
-				print("error could not set survivor option")
-			end
-		end
-		function gameOption:onChange(box)
-			print("option changed to ".. tostring(box.selected))
-		end
-		self.gameOptions:add(gameOption)
-		
-		y = y + spacing
-		
-		local options = SSHotKeyOptions
-		local gunspawnrateCombo = self:addCombo(splitpoint, y, comboWidth, 20,getText("ContextMenu_SShotkey3"), options, 1)
-		gunspawnrateCombo:setToolTipMap({defaultTooltip = getText("ContextMenu_SShotkeyDesc")});
-		
-		gameOption = GameOption:new('SSHotkey3', gunspawnrateCombo)
-		function gameOption.toUI(self)
-			local box = self.control
-			box.selected = SuperSurvivorGetOption("SSHotkey3")
-		end
-		function gameOption.apply(self)
-			local box = self.control
-			if box.options[box.selected] then
-				SuperSurvivorSetOption("SSHotkey3",box.selected)
-				print("setting survivor option")
-			else
-				print("error could not set survivor option")
-			end
-		end
-		function gameOption:onChange(box)
-			print("option changed to ".. tostring(box.selected))
-		end
-		self.gameOptions:add(gameOption)
-		
-		y = y + spacing
-		
-		local options = SSHotKeyOptions
-		local gunspawnrateCombo = self:addCombo(splitpoint, y, comboWidth, 20,getText("ContextMenu_SShotkey4"), options, 1)
-		gunspawnrateCombo:setToolTipMap({defaultTooltip = getText("ContextMenu_SShotkeyDesc")});
-		
-		gameOption = GameOption:new('SSHotkey4', gunspawnrateCombo)
-		function gameOption.toUI(self)
-			local box = self.control
-			box.selected = SuperSurvivorGetOption("SSHotkey4")
-		end
-		function gameOption.apply(self)
-			local box = self.control
-			if box.options[box.selected] then
-				SuperSurvivorSetOption("SSHotkey4",box.selected)
-				print("setting survivor option")
-			else
-				print("error could not set survivor option")
-			end
-		end
-		function gameOption:onChange(box)
-			print("option changed to ".. tostring(box.selected))
-		end
-		self.gameOptions:add(gameOption)
-		
-		------hot keys------- END
-	
-		 self.addY = self.addY+MainOptions.translatorPane:getHeight()+22;
+		self.addY = self.addY + MainOptions.translatorPane:getHeight()+22;
 
 		self.mainPanel:setScrollHeight(y + self.addY + 20)
 		

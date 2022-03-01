@@ -29,7 +29,7 @@ function FindThisTask:new(superSurvivor, itemType, CategoryOrType, thisQuantity)
 	o.Complete = false
 	o.WasSuccessful = false
 	
-	superSurvivor:Speak(getText("ContextMenu_SD_LookForItem_Before")..itemType..getText("ContextMenu_SD_LookForItem_After"))
+	superSurvivor:Speak("*" .. getText("ContextMenu_SD_LookForItem_Before")..itemType..getText("ContextMenu_SD_LookForItem_After") .. "*")
 	return o
 
 end

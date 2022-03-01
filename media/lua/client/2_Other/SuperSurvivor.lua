@@ -5,7 +5,6 @@ SuperSurvivor.__index = SuperSurvivor
 SurvivorVisionCone = 0.90
 
 function SuperSurvivor:new(isFemale,square)
-	
 	local o = {}	
 	setmetatable(o, self)
 	self.__index = self
@@ -23,7 +22,6 @@ function SuperSurvivor:new(isFemale,square)
 	o.userName:setAllowAnyImage(true);
 	o.userName:setDefaultFont(UIFont.Small);
 	o.userName:setDefaultColors(255, 255, 255, 255);
-	o.userName:ReadString(o.player:getForname())
 	
 	o.AmmoTypes = {}
 	o.AmmoBoxTypes = {}
@@ -31,6 +29,7 @@ function SuperSurvivor:new(isFemale,square)
 	o.LastMeleUsed = nil
 	o.roundChambered = nil
 	o.TicksSinceSpoke = 0
+	o.ShowName = SuperSurvivorGetOptionValue("SurvivorName") ~= 3
 	o.JustSpoke = false
 	o.SayLine1 = ""
 	
@@ -73,7 +72,9 @@ function SuperSurvivor:new(isFemale,square)
 	
 	o:setBravePoints(SuperSurvivorBravery)
 	local Dress = "RandomBasic"
-	
+	if o.ShowName then		
+		o.userName:ReadString(o.player:getForname())
+	end
 	
 	if(o.player:getPerkLevel(Perks.FromString("Aiming")) >= 3) then 
 		local innerresult = ZombRand(1, 6)
@@ -127,7 +128,7 @@ function SuperSurvivor:new(isFemale,square)
 end
 
 function SuperSurvivor:newLoad(ID,square)
-	
+
 	local o = {}	
 	setmetatable(o, self)
 	self.__index = self
@@ -145,7 +146,6 @@ function SuperSurvivor:newLoad(ID,square)
 	o.userName:setAllowAnyImage(true);
 	o.userName:setDefaultFont(UIFont.Small);
 	o.userName:setDefaultColors(255, 255, 255, 255);
-	o.userName:ReadString(o.player:getForname())
 	
 	o.AmmoTypes = {}
 	o.AmmoBoxTypes = {}
@@ -154,6 +154,7 @@ function SuperSurvivor:newLoad(ID,square)
 	o.roundChambered = nil
 	o.TicksSinceSpoke = 0
 	o.JustSpoke = false
+	o.ShowName = SuperSurvivorGetOptionValue("SurvivorName") ~= 3
 	o.SayLine1 = ""
 		
 	o.LastSurvivorSeen = nil
@@ -194,13 +195,13 @@ function SuperSurvivor:newLoad(ID,square)
 	for i=1, #LootTypes do o.SquareContainerSquareLooteds[LootTypes[i]] = {} end
 	o:setBravePoints(SuperSurvivorBravery)
 	
-	
-	
+	if o.ShowName then		
+		o.userName:ReadString(o.player:getForname())
+	end
 	return o
 end
 
 function SuperSurvivor:newSet(player)
-	
 	local o = {}	
 	setmetatable(o, self)
 	self.__index = self
@@ -218,6 +219,7 @@ function SuperSurvivor:newSet(player)
 	o.roundChambered = nil
 	o.TriggerHeldDown = false
 	o.TicksSinceSpoke = 0
+	o.ShowName = SuperSurvivorGetOptionValue("SurvivorName") ~= 3
 	o.JustSpoke = false
 	o.SayLine1 = ""
 	
@@ -256,6 +258,9 @@ function SuperSurvivor:newSet(player)
 	for i=1, #LootTypes do o.SquareContainerSquareLooteds[LootTypes[i]] = {} end
 	
 	o:setBravePoints(SuperSurvivorBravery)
+	if o.ShowName then		
+		o.userName:ReadString(o.player:getForname())
+	end
 	
 	return o
 end
@@ -336,7 +341,9 @@ function SuperSurvivor:getName()
 end
 
 function SuperSurvivor:refreshName()
-	if(self.player:getModData().Name ~= nil) then self:setName(self.player:getModData().Name) end
+	if(self.player:getModData().Name ~= nil) then
+		self:setName(self.player:getModData().Name) 
+	end
 end
 
 function SuperSurvivor:setName(nameToSet)
@@ -346,7 +353,10 @@ function SuperSurvivor:setName(nameToSet)
 	desc:setSurname("")	
 	self.player:setForname(nameToSet);
 	self.player:setDisplayName(nameToSet);
-	if(self.userName) then self.userName:ReadString(nameToSet) end
+
+	if(self.userName) and self.ShowName then 
+		self.userName:ReadString(nameToSet) 
+	end
 	
 	self.player:getModData().Name = nameToSet
 	self.player:getModData().NameRaw = nameToSet
@@ -354,15 +364,24 @@ end
 
 function SuperSurvivor:renderName()
 
-	if (not self.userName) or ((not self.JustSpoke) and ((not self:isInCell()) or (self:Get():getAlpha() ~= 1.0) or getSpecificPlayer(0)==nil or (not getSpecificPlayer(0):CanSee(self.player)))) then return false end
+	if (not self.userName) or ((not self.JustSpoke) and ((not self:isInCell()) or (self:Get():getAlpha() ~= 1.0) or getSpecificPlayer(0)==nil or (not getSpecificPlayer(0):CanSee(self.player)))) then 
+		return false 
+	end
 	
 	if(self.JustSpoke == true) and (self.TicksSinceSpoke == 0) then
-		self.TicksSinceSpoke = 250		
-		self.userName:ReadString(self.player:getForname() .."\n" .. self.SayLine1)
+		self.TicksSinceSpoke = 250
+		if self.ShowName then
+			self.userName:ReadString(self.player:getForname() .."\n" .. self.SayLine1)
+		else
+			self.userName:ReadString(self.SayLine1)
+		end
 	elseif(self.TicksSinceSpoke > 0) then
 		self.TicksSinceSpoke = self.TicksSinceSpoke - 1
-		if(self.TicksSinceSpoke == 0) then
+		if(self.TicksSinceSpoke == 0) and self.ShowName then
 			self.userName:ReadString(self.player:getForname() );
+			self.JustSpoke = false
+			self.SayLine1 = ""
+		else
 			self.JustSpoke = false
 			self.SayLine1 = ""
 		end	
@@ -425,11 +444,7 @@ function SuperSurvivor:loadPlayer(square, ID)
 		Buddy:getModData().ID = ID
 		Buddy:setNPC(true);
 		Buddy:setBlockMovement(true)
-		Buddy:setSceneCulled(false)
-		--Buddy:dressInRandomOutfit()
-		--Buddy:dressInNamedOutfit(Buddy:getRandomDefaultOutfit())
-		
-		
+		Buddy:setSceneCulled(false)		
 		
 		print("loading survivor " .. tostring(ID) .. " from file")
 		return Buddy
@@ -559,6 +574,7 @@ function SuperSurvivor:spawnPlayer(square, isFemale)
 	Buddy:getModData().bWalking = false
 	Buddy:getModData().isHostile = false	
 	Buddy:getModData().RWP = SuperSurvivorGetOptionValue("SurvivorFriendliness")
+	Buddy:getModData().ShowName = not SuperSurvivorName == 3
 	--print("SuperSurvivorGetOptionValue(SurvivorFriendliness):"..tostring(Buddy:getModData().RWP))
 	Buddy:getModData().AIMode = "Random Solo"
 	
@@ -604,13 +620,13 @@ function SuperSurvivor:spawnPlayer(square, isFemale)
 	local desc = Buddy:getDescriptor()
 	desc:setForename(nameToSet)
 	desc:setSurname("")	
-	print("new SS:" .. nameToSet .. " " .. tostring(Buddy:getBodyDamage():isInfected()))
+	
 	return Buddy
-
 end
 
-
-
+function SuperSurvivor:setShowName(toValue)
+	self.player:getModData().ShowName = toValue
+end
 function SuperSurvivor:setBravePoints(toValue)
 	self.player:getModData().BravePoints = toValue
 end
@@ -1459,7 +1475,7 @@ function SuperSurvivor:walkTowards(x,y,z)
 end
 
 function SuperSurvivor:setHostile(toValue)
-	if(toValue) then
+	if toValue and SuperSurvivorGetOptionValue("SurvivorName") == 1 then
 		self.userName:setDefaultColors(128,128, 128, 255);
 		self.userName:setOutlineColors(180,0, 0,255);
 	else		

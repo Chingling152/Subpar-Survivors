@@ -1,27 +1,27 @@
 ContextMenu_EN = {
 
-ContextMenu_Title  = "Survivors",
-ContextMenu_SD_AidCheck = "Medical / First Aid Check",
-ContextMenu_SD_AidCheckDesc = "Walk to this survivor and medical check him, if they move the process can be interupted",
+    ContextMenu_Title  = "Survivors",
+    ContextMenu_SD_AidCheck = "Medical / First Aid Check",
+    ContextMenu_SD_AidCheckDesc = "Walk to this survivor and medical check him, if they move the process can be interupted",
 
-ContextMenu_SD_AddClothing = "'s Clothing"
-ContextMenu_SD_RemoveClothing = "Remove Clothing"
-ContextMenu_UndressingClothes = "*Undressing*"
-ContextMenu_SD_SetName = "Change Name"
-ContextMenu_SD_Debug_PlayerStats = "Debug: Change Player Info"
+    ContextMenu_SD_AddClothing = "'s Clothing"
+    ContextMenu_SD_RemoveClothing = "Remove Clothing"
+    ContextMenu_UndressingClothes = "*Undressing*"
+    ContextMenu_SD_SetName = "Change Name"
+    ContextMenu_SD_Debug_PlayerStats = "Debug: Change Player Info"
 
-ContextMenu_Job_Leader = "Leader",
-ContextMenu_Job_Companion = "Companion",
-ContextMenu_Job_Dustman = "Dustman",
-ContextMenu_Job_Guard = "Guard",
-ContextMenu_Job_Sheriff = "Sheriff",
-ContextMenu_Job_Junkman = "Junkman",
-ContextMenu_Job_Farmer = "Farmer",
-ContextMenu_Job_Timberjack = "Timberjack",
-ContextMenu_Job_Hauler = "Hauler",
-ContextMenu_Job_Worker = "Worker",
-ContextMenu_Job_Partner = "Partner",
-ContextMenu_Job_Doctor = "Doctor",
+    ContextMenu_Job_Leader = "Leader",
+    ContextMenu_Job_Companion = "Companion",
+    ContextMenu_Job_Dustman = "Dustman",
+    ContextMenu_Job_Guard = "Guard",
+    ContextMenu_Job_Sheriff = "Sheriff",
+    ContextMenu_Job_Junkman = "Junkman",
+    ContextMenu_Job_Farmer = "Farmer",
+    ContextMenu_Job_Timberjack = "Timberjack",
+    ContextMenu_Job_Hauler = "Hauler",
+    ContextMenu_Job_Worker = "Worker",
+    ContextMenu_Job_Partner = "Partner",
+    ContextMenu_Job_Doctor = "Doctor",
 
 	ContextMenu_SD_NoPreSetSpawn = "Disable All Pre-set/Unique Survivors",
 	ContextMenu_SD_NoPreSetSpawnDesc = "Disable All Pre-set/Unique Survivors",
@@ -66,14 +66,11 @@ ContextMenu_Job_Doctor = "Doctor",
 	ContextMenu_SD_Brave = "Brave",
 	ContextMenu_SD_VeryBrave = "Very Brave",
 	
-	
-		ContextMenu_Debug_Character_Swap = "Debug: Character Swap",
-		ContextMenu_Debug_Infect&Murder_Character = "Debug: Infect&Murder Character",
-		ContextMenu_Debug_Character_Output = "Debug: Character Output",
-		ContextMenu_Debug_Unstuck = "Debug: Unstuck",
-		ContextMenu_Debug_Spawn_Soldier = "Debug: Spawn Soldier",
-		
-		
+	ContextMenu_Debug_Character_Swap = "Debug: Character Swap",
+	ContextMenu_Debug_Infect&Murder_Character = "Debug: Infect&Murder Character",
+	ContextMenu_Debug_Character_Output = "Debug: Character Output",
+	ContextMenu_Debug_Unstuck = "Debug: Unstuck",
+	ContextMenu_Debug_Spawn_Soldier = "Debug: Spawn Soldier",		
 		
 	ContextMenu_OutOfAmmo1 = "Out of Ammo!",
 	ContextMenu_OutOfAmmo2 = "I'm out of Ammo!",
@@ -169,6 +166,11 @@ ContextMenu_Job_Doctor = "Doctor",
 	ContextMenu_SD_UltraHigh = "Ultra High",
 	ContextMenu_SD_Off = "Off",
 	ContextMenu_SD_On = "On",
+
+    ContextMenu_SD_DifferentColor = "Different colors",
+	ContextMenu_SD_SameColor = "Same color",
+	ContextMenu_SOption_SurvivorName = "Show Survivor names",
+	ContextMenu_SOption_SurvivorNameDesc = "Determine if the survivors names will have the same color or not showed.",
 	
 	ContextMenu_SD_Every10Minutes = "Every 10 Minutes!",
 	ContextMenu_SD_EveryHour = "Every Hour!",
@@ -257,19 +259,19 @@ ContextMenu_Job_Doctor = "Doctor",
 	ContextMenu_SD_HiThere = "Hi there",
 	ContextMenu_SD_HelloThere = "Hello there!",
 	ContextMenu_SD_HelloWord1 = "What are you thinking?",
-ContextMenu_SD_HelloWord2 = "We can take a break here.",
-ContextMenu_SD_HelloWord3 = "How are you?",
-ContextMenu_SD_HelloWord4 = "How are you doing?",
-ContextMenu_SD_HelloWord5 = "What do you think?",
-ContextMenu_SD_HelloWord6 = "What are you thinking about?",
-ContextMenu_SD_HelloWord7 = "Anything to say?",
-ContextMenu_SD_HelloWord8 = "What do you know?",
-ContextMenu_SD_HelloWord9 = "Any new information?",
-ContextMenu_SD_HelloWord10 = "Any suggestions?",
-ContextMenu_SD_HelloWord11 = "Want to hear your advice",
-ContextMenu_SD_HelloWord12 = "What would you like to say about your current situation?",
-ContextMenu_SD_HelloWord13 = "Do you want something?", 
-ContextMenu_SD_HelloWord14 = "How do you do?", 
+    ContextMenu_SD_HelloWord2 = "We can take a break here.",
+    ContextMenu_SD_HelloWord3 = "How are you?",
+    ContextMenu_SD_HelloWord4 = "How are you doing?",
+    ContextMenu_SD_HelloWord5 = "What do you think?",
+    ContextMenu_SD_HelloWord6 = "What are you thinking about?",
+    ContextMenu_SD_HelloWord7 = "Anything to say?",
+    ContextMenu_SD_HelloWord8 = "What do you know?",
+    ContextMenu_SD_HelloWord9 = "Any new information?",
+    ContextMenu_SD_HelloWord10 = "Any suggestions?",
+    ContextMenu_SD_HelloWord11 = "Want to hear your advice",
+    ContextMenu_SD_HelloWord12 = "What would you like to say about your current situation?",
+    ContextMenu_SD_HelloWord13 = "Do you want something?", 
+    ContextMenu_SD_HelloWord14 = "How do you do?", 
 	
 	ContextMenu_SD_WhatYouWant = "Yeah? What do you want?",
 	ContextMenu_SD_NotInBuilding = "we are not in a building",

@@ -25,7 +25,7 @@ function isCanOpen(thisFood)
         return false
     end
 
-    return string.match(thisFood:getType() .. thisFood:getDisplayName(), "Opened")
+    return string.match(thisFood:getType() .. thisFood:getDisplayName(), "Open")
 end
 
 function isDogFood(thisFood)
@@ -40,6 +40,7 @@ function isCanned(thisFood)
 	if not thisFood then 
         return false 
     end
+
     local fullName = thisFood:getType() .. thisFood:getDisplayName()
 
     return string.match(fullName,"Canned") or string.match(fullName,"Tin");

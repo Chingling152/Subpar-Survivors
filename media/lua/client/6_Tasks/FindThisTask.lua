@@ -97,9 +97,15 @@ function FindThisTask:update()
 	
 	if(self.TargetItem == nil) then
 		self.Complete = true
-		if(self.WasSuccessful == false) then self.parent:Speak(getText("ContextMenu_SD_NoFindItem_Before")..self.itemtype..getText("ContextMenu_SD_NoFindItem_After")) end
-		if self.itemtype == "Food" then self.parent:setNoFoodNearBy(true)
-		elseif self.itemtype == "Water" then self.parent:setNoWaterNearBy(true) end
+		
+		if(self.WasSuccessful == false) then 
+			self.parent:Speak(getText("ContextMenu_SD_NoFindItem_Before")..self.itemtype..getText("ContextMenu_SD_NoFindItem_After")) 
+		end
+
+		if self.itemtype == "Food" then 
+			self.parent:setNoFoodNearBy(true)
+		elseif self.itemtype == "Water" then 
+			self.parent:setNoWaterNearBy(true) end
 		return false
 	end
 	
@@ -144,7 +150,7 @@ function FindThisTask:update()
 						squareTargetison:removeWorldObject(self.TargetItem:getWorldItem())
 						if(self.TargetItem:getWorldItem() ~= nil) then self.TargetItem:getWorldItem():removeFromSquare() end
 						self.TargetItem:setWorldItem(nil)
-						self.parent:Speak(getText("ContextMenu_SD_TakesFromGround_Before") .. self.TargetItem:getDisplayName() .. getText("ContextMenu_SD_TakesFromGround_After"))
+						self.parent:Speak("*" .. getText("ContextMenu_SD_TakesFromGround_Before") .. self.TargetItem:getDisplayName() .. getText("ContextMenu_SD_TakesFromGround_After") .. "*")
 						self.FoundCount = self.FoundCount + 1
 						
 						if(self.Quantity > 1) then
@@ -159,7 +165,7 @@ function FindThisTask:update()
 											squareTargetison:removeWorldObject(tempitem:getWorldItem())
 											if(self.TargetItem:getWorldItem() ~= nil) then tempitem:getWorldItem():removeFromSquare() end
 											tempitem:setWorldItem(nil)
-											self.parent:Speak(getText("ContextMenu_SD_TakesFromGround_Before") .. tempitem:getDisplayName() .. getText("ContextMenu_SD_TakesFromGround_After") )
+											self.parent:Speak("*" .. getText("ContextMenu_SD_TakesFromGround_Before") .. tempitem:getDisplayName() .. getText("ContextMenu_SD_TakesFromGround_After") .. "*")
 											self.FoundCount = self.FoundCount + 1
 											if(self.FoundCount >= self.Quantity) then 
 												--self.parent:Speak("breaking:" .. tostring(self.Quantity)..","..tostring(self.FoundCount))
@@ -176,7 +182,7 @@ function FindThisTask:update()
 					else
 						self.parent:StopWalk()
 						ISTimedActionQueue.add(ISInventoryTransferAction:new(self.parent.player, self.TargetItem, self.TargetItem:getContainer(), self.BagToPutIn, 20))
-						self.parent:Speak(getText("ContextMenu_SD_TakesFromCont_Before") .. self.TargetItem:getDisplayName() .. getText("ContextMenu_SD_TakesFromCont_After"))
+						self.parent:Speak("*" .. getText("ContextMenu_SD_TakesFromCont_Before") .. self.TargetItem:getDisplayName() .. getText("ContextMenu_SD_TakesFromCont_After") .. "*")
 						self.FoundCount = self.FoundCount + 1
 					end
 				else

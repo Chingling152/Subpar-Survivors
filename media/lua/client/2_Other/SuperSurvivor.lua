@@ -362,6 +362,10 @@ function SuperSurvivor:setName(nameToSet)
 	self.player:getModData().NameRaw = nameToSet
 end
 
+local function isRolePlayDialogue(dialogue)
+	print(dialogue)
+	return dialogue:match('^\*(.*)\*$')
+end
 function SuperSurvivor:renderName()
 
 	if (not self.userName) or ((not self.JustSpoke) and ((not self:isInCell()) or (self:Get():getAlpha() ~= 1.0) or getSpecificPlayer(0)==nil or (not getSpecificPlayer(0):CanSee(self.player)))) then 
@@ -372,19 +376,20 @@ function SuperSurvivor:renderName()
 		self.TicksSinceSpoke = 250
 		if self.ShowName then
 			self.userName:ReadString(self.player:getForname() .."\n" .. self.SayLine1)
-		else
+		elseif not isRolePlayDialogue(self.SayLine1) then
 			self.userName:ReadString(self.SayLine1)
 		end
 	elseif(self.TicksSinceSpoke > 0) then
 		self.TicksSinceSpoke = self.TicksSinceSpoke - 1
+
 		if(self.TicksSinceSpoke == 0) and self.ShowName then
 			self.userName:ReadString(self.player:getForname() );
-			self.JustSpoke = false
-			self.SayLine1 = ""
-		else
-			self.JustSpoke = false
-			self.SayLine1 = ""
+		elseif(self.TicksSinceSpoke == 0) then
+			self.userName:ReadString("");
 		end	
+
+		self.JustSpoke = false
+		self.SayLine1 = ""
 	end
 		
 	local sx = IsoUtils.XToScreen(self:Get():getX(), self:Get():getY(), self:Get():getZ(), 0);
@@ -2016,7 +2021,7 @@ function SuperSurvivor:ManageXP()
 					display_perk = getText("IGUI_perks_Blunt") .. " " .. display_perk
 				end
 				
-				self:Speak(getText("ContextMenu_SD_PerkLeveledUp_Before")..tostring(display_perk)..getText("ContextMenu_SD_PerkLeveledUp_After"))
+				self:Speak("*" .. getText("ContextMenu_SD_PerkLeveledUp_Before")..tostring(display_perk)..getText("ContextMenu_SD_PerkLeveledUp_After") .. "*")
 			end
 			--if(SurvivorPerks[i] == "Aiming") then self.player:Say(tostring(currentXP).."/"..tostring(XPforNextLevel)) end
 		end
@@ -2738,7 +2743,7 @@ end
 
 function SuperSurvivor:DrinkFromObject(waterObject)
     local playerObj = self.player
-	self:Speak(getText("ContextMenu_SD_Drinking"))
+	self:Speak("*" .. getText("ContextMenu_SD_Drinking") .. "*")
 	if not waterObject:getSquare() or not luautils.walkAdj(playerObj, waterObject:getSquare()) then
 		return
 	end

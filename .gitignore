@@ -1,12 +1,12 @@
 # change it later
 
 /*
-.vscode
+/.vscode
 !/zombie
 !/media
 !.gitattributes
 !icon.png
-!pewview.png
+!preview.png
 !poster.png
 !poster.xcf
 !mod.info

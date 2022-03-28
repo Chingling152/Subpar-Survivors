@@ -373,6 +373,7 @@ ContextMenu_EN = {
 	ContextMenu_SD_BaseArea = "Base Area",
 	ContextMenu_SD_ChopTreeArea = "Chop Trees Area",
 	ContextMenu_SD_TakeCorpseArea = "Take Corpses Area",
+    ContextMenu_SD_TrashStorageArea = "Trash Area"
 	ContextMenu_SD_CorpseStorageArea = "Drop Corpses Area",
 	ContextMenu_SD_TakeWoodArea = "Gather Wood Area",
 	ContextMenu_SD_WoodStorageArea = "Wood Storage Area",

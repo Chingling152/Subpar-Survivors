@@ -1235,20 +1235,18 @@ function SuperSurvivor:getBag()
 	
 	return self.player:getInventory()
 end
---[[
-function SuperSurvivor:getWeapon()	
-	local inv = self.player:getInventory()
-	local bag = self:getBag()
-	if inv:FindAndReturnCategory("Weapon") ~= nil then return inv:FindAndReturnCategory("Weapon")
-	elseif (inv ~= bag) and (bag:FindAndReturnCategory("Weapon") ~= nil) then return bag:FindAndReturnCategory("Weapon")
-	else return nil end
-end
-]]
+
 function SuperSurvivor:getWeapon()
 
-	if(self.player:getInventory() ~= nil) and (self.player:getInventory():FindAndReturnCategory("Weapon")) then return self.player:getInventory():FindAndReturnCategory("Weapon") end
-	if(self.player:getClothingItem_Back() ~= nil) and (instanceof(self.player:getClothingItem_Back(),"InventoryContainer")) and (self.player:getClothingItem_Back():getItemContainer():FindAndReturnCategory("Weapon")) then return self.player:getClothingItem_Back():getItemContainer():FindAndReturnCategory("Weapon") end
-	if(self.player:getSecondaryHandItem() ~= nil) and (instanceof(self.player:getSecondaryHandItem(),"InventoryContainer")) and (self.player:getSecondaryHandItem():getItemContainer():FindAndReturnCategory("Weapon")) then return self.player:getSecondaryHandItem():getItemContainer():FindAndReturnCategory("Weapon") end
+	if(self.player:getInventory() ~= nil) and (self.player:getInventory():FindAndReturnCategory("Weapon")) then 
+		return self.player:getInventory():FindAndReturnCategory("Weapon") 
+	end
+	if (self.player:getClothingItem_Back() ~= nil) and (instanceof(self.player:getClothingItem_Back(),"InventoryContainer")) and (self.player:getClothingItem_Back():getItemContainer():FindAndReturnCategory("Weapon")) then 
+		return self.player:getClothingItem_Back():getItemContainer():FindAndReturnCategory("Weapon") 
+	end
+	if(self.player:getSecondaryHandItem() ~= nil) and (instanceof(self.player:getSecondaryHandItem(),"InventoryContainer")) and (self.player:getSecondaryHandItem():getItemContainer():FindAndReturnCategory("Weapon")) then 
+		return self.player:getSecondaryHandItem():getItemContainer():FindAndReturnCategory("Weapon") 
+	end
 	
 	return nil
 end
@@ -1257,8 +1255,11 @@ function SuperSurvivor:hasRoomInBag()
 
 	local playerBag = self:getBag()
 	
-	if(playerBag:getCapacityWeight() >= (playerBag:getMaxWeight() * 0.9)) then return false
-	else return true end
+	if(playerBag:getCapacityWeight() >= (playerBag:getMaxWeight() * 0.9)) then 
+		return false
+	else 
+		return true 
+	end
 	
 end
 
@@ -1266,8 +1267,11 @@ function SuperSurvivor:hasRoomInBagFor(item)
 
 	local playerBag = self:getBag()
 	
-	if(playerBag:getCapacityWeight() + item:getWeight() >= (playerBag:getMaxWeight() * 0.9)) then return false
-	else return true end
+	if(playerBag:getCapacityWeight() + item:getWeight() >= (playerBag:getMaxWeight() * 0.9)) then 
+		return false
+	else 
+		return true 
+	end
 	
 end
 
@@ -1279,25 +1283,50 @@ function SuperSurvivor:getDangerSeenCount()
 end
 
 function SuperSurvivor:isInSameRoom(movingObj)
-	if not movingObj then return false end
+	if (not movingObj) then 
+		return false 
+	end
+
 	local objSquare = movingObj:getCurrentSquare()
-	if (not objSquare) then return false end
+	if (not objSquare) then 
+		return false 
+	end
+
 	local selfSquare = self.player:getCurrentSquare()
-	if (not selfSquare) then return false end
-	if(selfSquare:getRoom() == objSquare:getRoom()) then return true
-	else return false end
+	if (not selfSquare) then 
+		return false 
+	end
+
+	if(selfSquare:getRoom() == objSquare:getRoom()) then 
+		return true
+	else 
+		return false 
+	end
 end
 
+--TODO : use isInSameRoom(movingObj)
 function SuperSurvivor:isInSameBuilding(movingObj)
-	if not movingObj then return false end
+	if not movingObj then 
+		return false 
+	end
 	local objSquare = movingObj:getCurrentSquare()
-	if (not objSquare) then return false end
+
+	if (not objSquare) then 
+		return false 
+	end
+
 	local selfSquare = self.player:getCurrentSquare()
-	if (not selfSquare) then return false end
+	if (not selfSquare) then 
+		return false 
+	end
+
 	if(selfSquare:getRoom() ~= nil and objSquare:getRoom() ~= nil) then 
 		return (selfSquare:getRoom():getBuilding() == objSquare:getRoom():getBuilding())
 	end
-	if(selfSquare:getRoom() == objSquare:getRoom()) then return true end
+
+	if(selfSquare:getRoom() == objSquare:getRoom()) then 
+		return true 
+	end
 	
 	return false 
 end
@@ -1434,7 +1463,9 @@ end
 function SuperSurvivor:walkTo(square)
 
 
-	if(square == nil) then return false end
+	if(square == nil) then 
+		return false 
+	end
 	--ISTimedActionQueue.add(ISWalkToTimedAction:new (self.player, square))
 	--self:setRunning(true)
 	--self.player:StopAllActionQueue()
@@ -1511,7 +1542,9 @@ function SuperSurvivor:WalkToPoint(tx, ty, tz)
 		
         self.player:setPath2(nil);
         self.player:getPathFindBehavior2():pathToLocation(tx,ty,tz);
-		if(self.DebugMode) then print(self:getName() .. " WalkToPoint") end
+		if(self.DebugMode) then 
+			print(self:getName() .. " WalkToPoint") 
+		end
     end
         
   end
@@ -3134,41 +3167,7 @@ function SuperSurvivor:SuitUp(SuitName)
 				self.player:setClothingItem_Back(self.player:getInventory():AddItem("Base.Bag_Schoolbag"))
 			elseif(result > 36) then -- 12% / (12/72 or 16% at start)
 				self.player:setClothingItem_Back(self.player:getInventory():AddItem("Base.Bag_Satchel"))
-			end
-			--[[
-			local result = ZombRand(6)
-			if(result == 0) then
-			self:WearThis("Base.Hat_BaseballCapBlue");
-			self:WearThis("Base.Shirt_HawaiianRed");
-			self:WearThis("Base.TrousersMesh_DenimLight");
-			self:WearThis("Base.Shoes_Black");
-			elseif(result == 1) then
-			self:WearThis("Base.Hat_BaseballCapGreen");
-			self:WearThis("Base.Shirt_HawaiianTINT");
-			self:WearThis("Base.TrousersMesh_DenimLight");
-			self:WearThis("Base.Shoes_Black");
-			elseif(result == 2) then
-			self:WearThis("Base.Hat_BaseballCapGreen");
-			self:WearThis("Base.Shirt_HawaiianTINT");
-			self:WearThis("Base.TrousersMesh_DenimLight");
-			self:WearThis("Base.Shoes_Black");
-			elseif(result == 3) then
-			self:WearThis("Base.Tshirt_BusinessSpiffo");
-			self:WearThis("Base.TrousersMesh_DenimLight");
-			self:WearThis("Base.Shoes_Black");
-			elseif(result == 4) then
-			--self:WearThis("Base.Hat_BaseballCapGreen");
-			self:WearThis("Base.Tshirt_PileOCrepe");
-			self:WearThis("Base.TrousersMesh_DenimLight");
-			self:WearThis("Base.Shoes_Black");
-			else
-			--self:WearThis("Base.Hat_BaseballCapGreen");
-			self:WearThis("Base.Tshirt_McCoys");
-			self:WearThis("Base.Trousers_DefaultTEXTURE_HUE");
-			self:WearThis("Base.Shoes_Black");
-			end
-			]]
-			
+			end		
 			
 		end
 end

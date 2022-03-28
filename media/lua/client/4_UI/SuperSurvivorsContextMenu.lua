@@ -792,6 +792,7 @@ function SurvivorsFillWorldObjectContextMenu(player, context, worldobjects, test
 		SuperSurvivorsAreaSelect(submenu, "FoodStorageArea", getText("ContextMenu_SD_FoodStorageArea"))
 		SuperSurvivorsAreaSelect(submenu, "WeaponStorageArea", getText("ContextMenu_SD_WeaponStorageArea"))		
 		SuperSurvivorsAreaSelect(submenu, "ToolStorageArea", getText("ContextMenu_SD_ToolStorageArea"))		
+		SuperSurvivorsAreaSelect(submenu, "TrashStorageArea", getText("ContextMenu_SD_TrashStorageArea"))		
 		SuperSurvivorsAreaSelect(submenu, "MedicalStorageArea", getText("ContextMenu_SD_MedicalStorageArea"))
 		SuperSurvivorsAreaSelect(submenu, "FarmingArea", getText("ContextMenu_SD_FarmingArea"))
 		SuperSurvivorsAreaSelect(submenu, "ForageArea", getText("ContextMenu_SD_ForageArea"))

@@ -32,8 +32,11 @@ function CleanInvTask:isComplete()
 end
 
 function CleanInvTask:isValid()
-	if not self.parent or (not self.TheDropSquare and not self.TheDropContainer) then return false 
-	else return true end
+	if not self.parent or (not self.TheDropSquare and not self.TheDropContainer) then 
+		return false 
+	else 
+		return true 
+	end
 end
 
 function CleanInvTask:Talked()

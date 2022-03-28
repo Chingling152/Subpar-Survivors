@@ -442,14 +442,16 @@ function AIManager(TaskMangerIn)
 							TaskMangerIn:setTaskUpdateLimit(AutoWorkTaskTimeLimit)
 
 						elseif(job == "Clean Inventory") then
-							ASuperSurvivor:Speak("Cleaning Inventory")
+							ASuperSurvivor:Speak("*Cleaning Inventory*")
 							local dropSquare = CenterBaseSquare
-							local ToolStorageCenter = HisGroup:getGroupAreaCenterSquare("ToolStorageArea")
-							if(ToolStorageCenter) then dropSquare = ToolStorageCenter end
+							local ToolStorageCenter = HisGroup:getGroupAreaCenterSquare("TrashStorageArea")
+							if(ToolStorageCenter) then 
+								dropSquare = ToolStorageCenter
+							end
 							TaskMangerIn:AddToTop(CleanInvTask:new(ASuperSurvivor,dropSquare,false)) 
 							
 						elseif(job == "Wash Self") then
-							ASuperSurvivor:Speak("Washing Self")
+							ASuperSurvivor:Speak("*Washing Self*")
 							TaskMangerIn:AddToTop(WashSelfTask:new(ASuperSurvivor)) 
 							
 						end
@@ -549,7 +551,9 @@ function AIManager(TaskMangerIn)
 	
 	
 
-	if(ASuperSurvivor.DebugMode) then print(ASuperSurvivor:getName().." "..ASuperSurvivor:getAIMode() .. " AIManager3 " .. TaskMangerIn:getCurrentTask()) end
+	if(ASuperSurvivor.DebugMode) then 
+		print(ASuperSurvivor:getName().." "..ASuperSurvivor:getAIMode() .. " AIManager3 " .. TaskMangerIn:getCurrentTask())
+	end
 	
 	
 	return TaskMangerIn

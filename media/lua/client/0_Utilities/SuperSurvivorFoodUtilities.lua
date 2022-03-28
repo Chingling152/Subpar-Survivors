@@ -2,13 +2,13 @@
 FoodsToExlude = {"Bleach", "Cigarettes", "HCCigar", "Antibiotics", "Teabag2", "Salt", "EggCarton"}
 
 local FoodScores = {
-    Cooked = 5,
-    Fresh = 4,
-    FruitsAndVegetables = 3,
-    Fish = 3,
-    Pepper = 3,
-    OpenCanned = 2,
-    Canned = 1,
+    Cooked = 10,
+    Fresh = 8,
+    FruitsAndVegetables = 5,
+    Fish = 5,
+    Pepper = 5,
+    OpenCanned = 4,
+    Canned = 3,
     Alchool = 0,
     DryGoods = -2,
     Burned = -4,
